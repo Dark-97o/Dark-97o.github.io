@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEM Shadow Market</title>
+    <link rel="icon" href="https://lh3.googleusercontent.com/pw/AP1GczOdFAS_JGWotWMJF4LNK3HIwy3BcYLYGkNs1OSnJTQqi5SH3Fu6JGCF4Ih3fnm08lByT7qPAPybLPTF7TzuDgTi5otMigrX6YP_1Dq1kaEySEmjHGScigLMYd7pYLUO_4jZjUly57Mimx5IYDtLF4BK=w500-h500-s-no-gm?authuser=3" type="image/png">
+    <title>UEMJ Shadow Market</title>
     <style>
         /* Global Styles */
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
@@ -590,6 +591,21 @@
         }
         
         .semester-select option {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .department-select {
+            margin: 20px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--primary-dark);
+            border-radius: 5px;
+            color: var(--text-color);
+            width: 100%;
+        }
+        
+        .department-select option {
             background-color: var(--secondary-color);
             color: var(--text-color);
         }
@@ -1310,54 +1326,154 @@
         </div>
     </section>
     
-    <!-- Question Bank Section -->
-    <section id="question-bank">
-        <div class="container">
-            <h2 class="section-title">Question Bank</h2>
-            <p class="section-subtitle">Access previous year question papers for all semesters</p>
-            
-            <div class="question-bank-container">
-                <div class="question-bank-card">
-                    <h3>Mid Term Exam Papers</h3>
-                    <p>Access previous mid-semester exam papers.</p>
-                    <select class="semester-select">
-                        <option selected disabled>Select Semester</option>
-                        <option value="sem1">Semester 1</option>
-                        <option value="sem2">Semester 2</option>
-                        <option value="sem3">Semester 3</option>
-                        <option value="sem4">Semester 4</option>
-                        <option value="sem5">Semester 5</option>
-                        <option value="sem6">Semester 6</option>
-                        <option value="sem7">Semester 7</option>
-                        <option value="sem8">Semester 8</option>
-                    </select>
-                    <a href="https://forms.google.com/question-papers" class="btn" style="margin-top: 15px;">Access Papers</a>
-                </div>
-                
-                <div class="question-bank-card">
-                    <h3>End Term Exam Papers</h3>
-                    <p>Access previous end-semester exam paper.</p>
-                    <select class="semester-select">
-                        <option selected disabled>Select Semester</option>
-                        <option value="sem1">Semester 1</option>
-                        <option value="sem2">Semester 2</option>
-                        <option value="sem3">Semester 3</option>
-                        <option value="sem4">Semester 4</option>
-                        <option value="sem5">Semester 5</option>
-                        <option value="sem6">Semester 6</option>
-                        <option value="sem7">Semester 7</option>
-                        <option value="sem8">Semester 8</option>
-                    </select>
-                    <a href="https://forms.google.com/question-papers" class="btn" style="margin-top: 15px;">Access Papers</a>
-                </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 30px;">
-                <p style="margin-bottom: 20px;">Need a specific question paper that's not available in our collection?</p>
-                <a href="https://forms.google.com/request-paper" class="btn">Request Paper</a>
+   <!-- Question Bank Section -->
+<section id="question-bank">
+    <div class="container">
+        <h2 class="section-title">Question Bank</h2>
+        <p class="section-subtitle">Access previous year question papers for all semesters</p>
+        
+        <div class="question-bank-container">
+            <div class="question-bank-card">
+                <h3>End Term Exam Papers</h3>
+                <p>Access previous end-semester exam papers.</p>
+                <select id="end-department-select" class="department-select">
+                    <option selected disabled>Select Department</option>
+                    <option value="cse">Computer Science</option>
+                    <option value="ece">Electronics & Communication</option>
+                    <option value="mech">Mechanical Engineering</option>
+                    <option value="civil">Civil Engineering</option>
+                    <option value="eee">Electrical Engineering</option>
+                    <option value="bca">BCA</option>
+                    <option value="bba">BBA</option>
+                    <option value="bpt">BPT</option>
+                </select>
+                <select id="end-semester-select" class="semester-select">
+                    <option selected disabled>Select Semester</option>
+                    <option value="sem1">Semester 1</option>
+                    <option value="sem2">Semester 2</option>
+                    <option value="sem3">Semester 3</option>
+                    <option value="sem4">Semester 4</option>
+                    <option value="sem5">Semester 5</option>
+                    <option value="sem6">Semester 6</option>
+                    <option value="sem7">Semester 7</option>
+                    <option value="sem8">Semester 8</option>
+                </select>
+                <button id="end-access-btn" class="btn" style="margin-top: 15px;">Access Papers</button>
             </div>
         </div>
-    </section>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <p style="margin-bottom: 20px;">Need a specific question paper that's not available in our collection?</p>
+            <a href="https://forms.google.com/request-paper" class="btn">Request Paper</a>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Drive links mapping
+    const driveLinks = {
+        // End-term papers
+        end: {
+            cse: {
+                sem1: "https://drive.google.com/drive/folders/1xyzEndCSESem1",
+                sem2: "https://drive.google.com/drive/folders/1xyzEndCSESem2",
+                sem3: "https://drive.google.com/drive/folders/1xyzEndCSESem3",
+                sem4: "https://drive.google.com/drive/folders/1xyzEndCSESem4",
+                sem5: "https://drive.google.com/drive/folders/1xyzEndCSESem5",
+                sem6: "https://drive.google.com/drive/folders/1xyzEndCSESem6",
+                sem7: "https://drive.google.com/drive/folders/1xyzEndCSESem7",
+                sem8: "https://drive.google.com/drive/folders/1xyzEndCSESem8"
+            },
+            ece: {
+                sem1: "https://drive.google.com/drive/folders/1xyzEndECESem1",
+                sem2: "https://drive.google.com/drive/folders/1xyzEndECESem2",
+                sem3: "https://drive.google.com/drive/folders/1xyzEndECESem3",
+                sem4: "https://drive.google.com/drive/folders/1xyzEndECESem4",
+                sem5: "https://drive.google.com/drive/folders/1xyzEndECESem5",
+                sem6: "https://drive.google.com/drive/folders/1xyzEndECESem6",
+                sem7: "https://drive.google.com/drive/folders/1xyzEndECESem7",
+                sem8: "https://drive.google.com/drive/folders/1xyzEndECESem8"
+            },
+            mech: {
+                sem1: "https://drive.google.com/drive/folders/1xyzEndMECHSem1",
+                sem2: "https://drive.google.com/drive/folders/1xyzEndMECHSem2",
+                sem3: "https://drive.google.com/drive/folders/1xyzEndMECHSem3",
+                sem4: "https://drive.google.com/drive/folders/1xyzEndMECHSem4",
+                sem5: "https://drive.google.com/drive/folders/1xyzEndMECHSem5",
+                sem6: "https://drive.google.com/drive/folders/1xyzEndMECHSem6",
+                sem7: "https://drive.google.com/drive/folders/1xyzEndMECHSem7",
+                sem8: "https://drive.google.com/drive/folders/1xyzEndMECHSem8"
+            },
+            civil: {
+                sem1: "https://drive.google.com/drive/folders/1xyzEndCIVILSem1",
+                sem2: "https://drive.google.com/drive/folders/1xyzEndCIVILSem2",
+                sem3: "https://drive.google.com/drive/folders/1xyzEndCIVILSem3",
+                sem4: "https://drive.google.com/drive/folders/1xyzEndCIVILSem4",
+                sem5: "https://drive.google.com/drive/folders/1xyzEndCIVILSem5",
+                sem6: "https://drive.google.com/drive/folders/1xyzEndCIVILSem6",
+                sem7: "https://drive.google.com/drive/folders/1xyzEndCIVILSem7",
+                sem8: "https://drive.google.com/drive/folders/1xyzEndCIVILSem8"
+            },
+            eee: {
+                sem1: "https://drive.google.com/drive/folders/1xyzEndEEESem1",
+                sem2: "https://drive.google.com/drive/folders/1xyzEndEEESem2",
+                sem3: "https://drive.google.com/drive/folders/1xyzEndEEESem3",
+                sem4: "https://drive.google.com/drive/folders/1xyzEndEEESem4",
+                sem5: "https://drive.google.com/drive/folders/1xyzEndEEESem5",
+                sem6: "https://drive.google.com/drive/folders/1xyzEndEEESem6",
+                sem7: "https://drive.google.com/drive/folders/1xyzEndEEESem7",
+                sem8: "https://drive.google.com/drive/folders/1xyzEndEEESem8"
+            },
+            bca: {
+                sem1: "https://drive.google.com/drive/folders/1xyzEndBCASem1",
+                sem2: "https://drive.google.com/drive/folders/1xyzEndBCASem2",
+                sem3: "https://drive.google.com/drive/folders/1xyzEndBCASem3",
+                sem4: "https://drive.google.com/drive/folders/1xyzEndBCASem4",
+                sem5: "https://drive.google.com/drive/folders/1xyzEndBCASem5",
+                sem6: "https://drive.google.com/drive/folders/1xyzEndBCASem6"
+            },
+            bba: {
+                sem1: "https://drive.google.com/drive/folders/1xyzEndBBASem1",
+                sem2: "https://drive.google.com/drive/folders/1xyzEndBBASem2",
+                sem3: "https://drive.google.com/drive/folders/1xyzEndBBASem3",
+                sem4: "https://drive.google.com/drive/folders/1xyzEndBBASem4",
+                sem5: "https://drive.google.com/drive/folders/1xyzEndBBASem5",
+                sem6: "https://drive.google.com/drive/folders/1xyzEndBBASem6"
+            },
+            bpt: {
+                sem1: "https://drive.google.com/drive/folders/1xyzEndBPTSem1",
+                sem2: "https://drive.google.com/drive/folders/1xyzEndBPTSem2",
+                sem3: "https://drive.google.com/drive/folders/1xyzEndBPTSem3",
+                sem4: "https://drive.google.com/drive/folders/1xyzEndBPTSem4",
+                sem5: "https://drive.google.com/drive/folders/1xyzEndBPTSem5",
+                sem6: "https://drive.google.com/drive/folders/1xyzEndBPTSem6",
+                sem7: "https://drive.google.com/drive/folders/1xyzEndBPTSem7",
+                sem8: "https://drive.google.com/drive/folders/1xyzEndBPTSem8"
+            }
+        }
+    };
+    // End-term access button event listener
+    document.getElementById('end-access-btn').addEventListener('click', function() {
+        const department = document.getElementById('end-department-select').value;
+        const semester = document.getElementById('end-semester-select').value;
+        
+        if(department === null || department === "Select Department" || 
+           semester === null || semester === "Select Semester") {
+            alert('Please select both department and semester');
+            return;
+        }
+        
+        // Check if the link exists
+        if(driveLinks.end[department] && driveLinks.end[department][semester]) {
+            // Play a short woosh sound
+            new Audio('https://assets.mixkit.co/active_storage/sfx/2578/2578-preview.mp3').play();
+            // Redirect to the specific Google Drive link
+            window.open(driveLinks.end[department][semester], '_blank');
+        } else {
+            alert('Papers for this selection dont exist or are not available yet. Please request them using the Request Paper button.');
+        }
+    });
+</script>
     
     <!-- Join Team Section -->
     <section id="join-team" class="join-team">
