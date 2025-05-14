@@ -1588,3 +1588,23 @@ Included JavaScript for
     </script>
 </body>
 </html>
+
+// CSS for floating cubes
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .cube {
+                position: absolute;
+                background: linear-gradient(135deg, #ff0080, #ff8c00);
+                opacity: 0.7;
+                transform: rotate(45deg);
+                animation: float 15s infinite linear;
+            }
+            
+            @keyframes float {
+                0% { transform: translateY(0); }
+                50% { transform: translateY(-20px); }
+                100% { transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
