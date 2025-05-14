@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UEM Shadow Market</title>
+    <style>
+        /* Global Styles */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #00ffff;
+            --primary-dark: #00cccc;
+            --secondary-color: #121212;
+            --text-color: #ffffff;
+            --accent-color: #720ae6;
+            --card-bg: rgba(0, 0, 0, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--text-color);
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Animation Background */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .cube {
+            position: absolute;
+            border: 1px solid var(--primary-color);
+            opacity: 0.2;
+            animation: cubeAnimation 20s linear infinite;
+        }
+
+        @keyframes cubeAnimation {
+            0% {
+                transform: rotate(0deg) translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.2;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: rotate(360deg) translateY(1000px) translateX(500px);
+                opacity: 0;
+            }
+        }
+        
+        /* Grid Lines */
+        .grid {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .grid:before, .grid:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(var(--primary-color) 0.5px, transparent 0.5px);
+            background-size: 100% 30px;
+            opacity: 0.1;
+        }
+        
+        .grid:after {
+            transform: rotate(90deg);
+        }
+        
+        /* Main Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--primary-color);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .mobile-menu div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-color);
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 20px;
+            z-index: 1;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            background: linear-gradient(90deg, var(--primary-dark), var(--primary-color));
+            border: none;
+            border-radius: 30px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            margin: -30px auto 50px;
+            max-width: 700px;
+            opacity: 0.7;
+            font-size: 1rem;
+        }
+        
+        /* Services Section */
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-box {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .service-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .service-box h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .service-box p {
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
+        .price-tag {
+            background: rgba(0, 255, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-top: auto;
+        }
+        
+        .price-tag p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+        
+        /* Tabs for Services */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 10px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--primary-dark);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        
+        .tab-btn.active {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Question Bank Section */
+        .question-bank {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .accordion {
+            background: transparent;
+            color: var(--text-color);
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.4s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+        }
+        
+        .accordion:hover {
+            background-color: rgba(0, 255, 255, 0.1);
+        }
+        
+        .accordion:after {
+            content: '+';
+            color: var(--primary-color);
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+        
+        .accordion.active:after {
+            content: '-';
+        }
+        
+        .panel {
+            padding: 0 18px;
+            background-color: transparent;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+        
+        /* Join Team Section */
+        .join-team {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/600') center/cover;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .join-team:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.2), transparent);
+        }
+        
+        .join-team .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .join-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid var(--primary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--primary-dark);
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+        
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        /* News Section */
+        .news-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .news-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .news-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .news-content {
+            padding: 20px;
+        }
+        
+        .news-date {
+            font-size: 0.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .news-title {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .news-excerpt {
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+        
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .read-more:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .read-more:hover:after {
+            width: 100%;
+        }
+        
+        /* Request Notes Section */
+        .request-notes {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid var(--primary-dark);
+        }
+        
+        /* Emergency Section */
+        .emergency-supplies {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .emergency-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .emergency-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .emergency-card img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--secondary-color);
+            padding: 50px 0 20px;
+            border-top: 1px solid var(--primary-dark);
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-links {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-links h4 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            nav {
+                position: fixed;
+                right: 0;
+                top: 0;
+                height: 100vh;
+                width: 70%;
+                background: rgba(0, 0, 0, 0.95);
+                transform: translateX(100%);
+                transition: transform 0.5s ease-in;
+                z-index: 1000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-left: 1px solid var(--primary-color);
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 15px 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+                z-index: 1001;
+            }
+            
+            .nav-active {
+                transform: translateX(0%);
+            }
+            
+            .mobile-menu.toggle .line1 {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            
+            .mobile-menu.toggle .line2 {
+                opacity: 0;
+            }
+            
+            .mobile-menu.toggle .line3 {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background">
+        <div class="grid"></div>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="/api/placeholder/50/50" alt="UEM Shadow Market Logo">
+                <div class="logo-text">UEM Shadow Market</div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#question-bank">Question Bank</a></li>
+                    <li><a href="#join-team">Join Team</a></li>
+                    <li><a href="#news">News</a></li>
+                    <li><a href="#notes">Request Notes</a></li>
+                    <li><a href="#emergency">Emergency</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">UEM Shadow Market</h1>
+            <p class="hero-subtitle">Your anonymous support system for academic success at UEM Jaipur</p>
+            <div>
+                <a href="#services" class="btn">View Services</a>
+                <a href="#join-team" class="btn">Join Our Network</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">Select your year below to view services tailored for you</p>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="first-year">First Year</button>
+                <button class="tab-btn" data-tab="second-year">Second Year</button>
+                <button class="tab-btn" data-tab="third-year">Third Year</button>
+                <button class="tab-btn" data-tab="fourth-year">Fourth Year</button>
+            </div>
+            
+            <!-- First Year Content -->
+            <div class="tab-content active" id="first-year">
+                <div class="services-container">
+                    <div class="service-box">
+                        <h3>Assignment Writing</h3>
+                        <p>Professional writing services for all your basic engineering assignments. Get high-quality content that helps you understand fundamental concepts.</p>
+                        <div class="price-tag">
+                            <p>Starting at ₹150 per page</p>
+                            <p>Delivery: 2-3 days</p>
+                            <p>Express delivery available (₹250 per page)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-box">
+                        <h3>ED Assignment Making</h3>
+                        <p>Precise Engineering Drawing assignments with clean, accurate diagrams and proper annotations as per UEM standards.</p>
+                        <div class="price-tag">
+                            <p>₹200 per diagram</p>
+                            <p>Full assignment: ₹500-1000</p>
+                            <p>Delivery: 3-4 days</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-box">
+                        <h3>Project File Writing</h3>
+                        <p>Complete project documentation for your first-year mini projects with proper formatting and technical content.</p>
+                        <div class="price-tag">
+                            <p>₹800 for basic projects</p>
+                            <p>₹300 per additional diagram</p>
+                            <p>Delivery: 5-7 days</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Second Year Content -->
+            <div class="tab-content" id="second-year">
+                <div class="services-container">
+                    <div class="service-box">
+                        <h3>Assignment Writing</h3>
+                        <p>Specialized assignment services for core subjects like Data Structures, Digital Electronics, and more with proper technical diagrams.</p>
+                        <div class="price-tag">
+                            <p>Starting at ₹200 per page</p>
+                            <p>Delivery: 2-3 days</p>
+                            <p>Express delivery available (₹300 per page)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-box">
+                        <h3>Innovative Project Report</h3>
+                        <p>Complete documentation for your innovative projects with methodology, results, and analysis sections.</p>
+                        <div class="price-tag">
+                            <p>₹1500 for standard reports</p>
+                            <p>₹400 per diagram/flowchart</p>
+                            <p>Delivery: 7 days</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-box">
+                        <h3>Innovative Project PPT</h3>
+                        <p>Professional PowerPoint presentations for your innovative projects with modern design and technical content.</p>
+                        <div class="price-tag">
+                            <p>₹800 for 15-20 slides</p>
+                            <p>₹100 per additional slide</p>
+                            <p>Delivery: 3-5 days</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Third Year Content -->
+            <div class="tab-content" id="third-year">
+                <div class="services-container">
+                    <div class="service-box">
+                        <h3>Assignment Writing</h3>
+                        <p>Advanced assignment writing for specialized subjects with professional research and citations.</p>
+                        <div class="price-tag">
+                            <p>Starting at ₹250 per page</p>
+                            <p>Delivery: 3-4 days</p>
+                            <p>Express delivery available (₹400 per page)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-box">
+                        <h3>Innovative Project Rent/Buy</h3>
+                        <p>Get access to previously completed innovative projects that you can rent for reference or buy outright.</p>
+                        <div class="price-tag">
+                            <p>Rent: ₹1000-2000 (1 week)</p>
+                            <p>Buy: ₹3000-5000</p>
+                            <p>Includes documentation and source code</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-box">
+                        <h3>Project File Writing</h3>
+                        <p>Complete documentation for major projects with detailed system architecture, implementation details, and testing methodology.</p>
+                        <div class="price-tag">
+                            <p>₹2500 for standard documentation</p>
+                            <p>₹500 per additional module</p>
+                            <p>Delivery: 10 days</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fourth Year Content -->
+            <div class="tab-content" id="fourth-year">
+                <div class="services-container">
+                    <div class="service-box">
+                        <h3>Major Project Documentation</h3>
+                        <p>Professional documentation for final year projects with comprehensive literature reviews, methodology, and results analysis.</p>
+                        <div class="price-tag">
+                            <p>Starting at ₹4000</p>
+                            <p>Includes up to 5 revisions</p>
+                            <p>Delivery: 14 days</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-box">
+                        <h3>Final Presentation Design</h3>
+                        <p>Impactful presentation design for your final project defense with professional slides and speaker notes.</p>
+                        <div class="price-tag">
+                            <p>₹1500 for standard presentation</p>
+                            <p>Includes practice Q&A document</p>
+                            <p>Delivery: 7 days</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-box">
+                        <h3>Job Interview Preparation</h3>
+                        <p>Specialized preparation materials and mock interviews to help you prepare for campus placements.</p>
+                        <div class="price-tag">
+                            <p>₹2000 for preparation package</p>
+                            <p>₹1000 per mock interview session</p>
+                            <p>Includes personalized feedback</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Question Bank Section -->
+    <section id="question-bank">
+        <div class="container">
+            <h2 class="section-title">Question Bank</h2>
+            <p class="section-subtitle">Access previous years' question papers and expected questions for upcoming exams</p>
+            
+            <div class="question-bank">
+                <button class="accordion">Mid-Term Suggestions (Current Semester)</button>
+                <div class="panel">
+                    <p>Our team of experts analyzes past papers and faculty teaching patterns to predict the most likely questions for your mid-term exams. Updated weekly during exam season.</p>
+                    <p>Available for all branches and years. Contact us for subject-specific suggestions.</p>
+                    <a href="#" class="read-more">Request Access</a>
+                </div>
+                
+                <button class="accordion">End-Semester Expected Questions</button>
+                <div class="panel">
+                    <p>Comprehensive compilation of expected questions for end-semester exams based on syllabus coverage and faculty focus areas.</p>
+                    <p>Includes detailed solutions for complex problems and conceptual questions.</p>
+                    <a href="#" class="read-more">Request Access</a>
+                </div>
+                
+                <button class="accordion">Previous Years' Question Papers (2020-2024)</button>
+                <div class="panel">
+                    <p>Complete collection of previous years' question papers organized by semester, branch, and subject for easy reference.</p>
+                    <p>Includes solved papers with detailed explanations for difficult questions.</p>
+                    <a href="#" class="read-more">Browse Collection</a>
+                </div>
+                
+                <button class="accordion">Subject-Wise Important Topics</button>
+                <div class="panel">
+                    <p>Expert analysis of each subject highlighting the most important topics and concepts likely to appear in exams.</p>
+                    <p>Updated each semester based on faculty feedback and syllabus changes.</p>
+                    <a href="#" class="read-more">View Topics</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Join Team Section -->
+    <section id="join-team">
+        <div class="container">
+            <h2 class="section-title">Join Our Team</h2>
+            <p class="section-subtitle">Become part of our anonymous network and earn while helping fellow students</p>
+            
+            <div class="join-form">
+                <form id="team-form">
+                    <div class="form-group">
+                        <label for="nickname">Anonymous Nickname</label>
+                        <input type="text" id="nickname" class="form-control" placeholder="Choose a nickname">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="year">Year of Study</label>
+                        <select id="year" class="form-control">
+                            <option value="">Select Year</option>
+                            <option value="1">First Year</option>
+                            <option value="2">Second Year</option>
+                            <option value="3">Third Year</option>
+                            <option value="4">Fourth Year</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="skills">Your Skills</label>
+                        <select id="skills" class="form-control" multiple>
+                            <option value="assignment">Assignment Writing</option>
+                            <option value="ed">Engineering Drawing</option>
+                            <option value="programming">Programming</option>
+                            <option value="design">Design</option>
+                            <option value="documentation">Documentation</option>
+                            <option value="presentation">Presentation Design</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="availability">Weekly Availability (hours)</label>
+                        <input type="number" id="availability" class="form-control" min="1" max="40">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact">Secure Contact Method</label>
+                        <input type="text" id="contact" class="form-control" placeholder="Telegram/Signal username or encrypted email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Why do you want to join?</label>
+                        <textarea id="message" class="form-control" placeholder="Tell us why you want to join and how you can contribute"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">Submit Application</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- News Section -->
+    <section id="news">
+        <div class="container">
+            <h2 class="section-title">Latest Campus News</h2>
+            <p class="section-subtitle">Stay updated with the latest happenings at UEM Jaipur from trusted sources</p>
+            
+            <div class="news-container">
+                <div class="news-card">
+                    <img src="/api/placeholder/400/200" alt="News Image" class="news-img">
+                    <div class="news-content">
+                        <span class="news-date">May 12, 2025</span>
+                        <h3 class="news-title">End Semester Exam Schedule Released</h3>
+                        <p class="news-excerpt">The university has officially released the end semester examination schedule. Exams will begin from June 5th and continue until June 20th.</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <img src="/api/placeholder/400/200" alt="News Image" class="news-img">
+                    <div class="news-content">
+                        <span class="news-date">May 10, 2025</span>
+                        <h3 class="news-title">New Attendance Policy Announced</h3>
+                        <p class="news-excerpt">The university has implemented a revised attendance policy requiring minimum 75% attendance to appear for end semester examinations.</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <img src="/api/placeholder/400/200" alt="News Image" class="news-img">
+                    <div class="news-content">
+                        <span class="news-date">May 8, 2025</span>
+                        <h3 class="news-title">Major Tech Companies Visiting for Placements</h3>
+                        <p class="news-excerpt">Google, Microsoft and Amazon have confirmed campus visits for the upcoming placement season. Pre-placement talks scheduled for next week.</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <img src="/api/placeholder/400/200" alt="News Image" class="news-img">
+                    <div class="news-content">
+                        <span class="news-date">May 5, 2025</span>
+                        <h3 class="news-title">Annual Tech Fest Dates Announced</h3>
+                        <p class="news-excerpt">The annual technology festival 'TechnoUEM' will be held from July 10-12, 2025. Registration for events now open.</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Request Notes Section -->
+    <section id="notes">
+        <div class="container">
+            <h2 class="section-title">Request Notes</h2>
+            <p class="section-subtitle">Can't find the notes you need? Request them here and we'll help you out</p>
+            
+            <div class="request-notes">
+                <form id="notes-form">
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" class="form-control" placeholder="Enter subject name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="topic">Specific Topic/Chapter</label>
+                        <input type="text" id="topic" class="form-control" placeholder="Enter specific topic or chapter">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="professor">Professor Name (if any)</label>
+                        <input type="text" id="professor" class="form-control" placeholder="Enter professor name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="urgency">How Urgent?</label>
+                        <select id="urgency" class="form-control">
+                            <option value="low">Not Urgent (1-2 weeks)</option>
+                            <option value="medium">Somewhat Urgent (3-5 days)</option>
+                            <option value="high">Very Urgent (24-48 hours)</option>
+                            <option value="extreme">Emergency (Within 24 hours)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="note-details">Additional Details</label>
+                        <textarea id="note-details" class="form-control" placeholder="Any specific requirements or details about the notes you need"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-method">Contact Method</label>
+                        <input type="text" id="contact-method" class="form-control" placeholder="How should we contact you?">
+                    </div>
+                    
+                    <button type="submit" class="btn">Submit Request</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Emergency Supplies Section -->
+    <section id="emergency">
+        <div class="container">
+            <h2 class="section-title">Emergency Supplies</h2>
+            <p class="section-subtitle">Last-minute essentials for those urgent situations</p>
+            
+            <div class="emergency-supplies">
+                <div class="emergency-card">
+                    <img src="/api/placeholder/80/80" alt="Drawing Kit">
+                    <h3>ED Drawing Kits</h3>
+                    <p>Complete drawing kits with all necessary tools for your ED submissions</p>
+                    <p class="price-tag">Rent: ₹200/day | Buy: ₹800</p>
+                </div>
+                
+                <div class="emergency-card">
+                    <img src="/api/placeholder/80/80" alt="Lab Manuals">
+                    <h3>Lab Manuals</h3>
+                    <p>Last-minute lab manuals with pre-filled observations and results</p>
+                    <p class="price-tag">₹300 per manual</p>
+                </div>
+                
+                <div class="emergency-card">
+                    <img src="/api/placeholder/80/80" alt="Project Components">
+                    <h3>Project Components</h3>
+                    <p>Emergency electronics and hardware components for project submissions</p>
+                    <p class="price-tag">Varies by component</p>
+                </div>
+                
+                <div class="emergency-card">
+                    <img src="/api/placeholder/80/80" alt="Printed Materials">
+                    <h3>24/7 Printing</h3>
+                    <p>Emergency printing services available round the clock</p>
+                    <p class="price-tag">₹5/page (B&W) | ₹15/page (Color)</p>
+                </div>
+                
+                <div class="emergency-card">
+                    <img src="/api/placeholder/80/80" alt="Pre-made Projects">
+                    <h3>Ready-Made Projects</h3>
+                    <p>Working project models available for immediate presentation</p>
+                    <p class="price-tag">Rent: ₹1000/day</p>
+                </div>
+                
+                <div class="emergency-card">
+                    <img src="/api/placeholder/80/80" alt="Last Minute Prep">
+                    <h3>Last-Minute Viva Prep</h3>
+                    <p>Quick preparation guides and important questions for viva</p>
+                    <p class="price-tag">₹500 per subject</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo">
+                        <img src="/api/placeholder/50/50" alt="UEM Shadow Market Logo">
+                        <div class="logo-text">UEM Shadow Market</div>
+                    </div>
+                    <p style="margin-top: 20px;">Your anonymous academic support network at University of Engineering and Management, Jaipur.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#question-bank">Question Bank</a></li>
+                        <li><a href="#join-team">Join Team</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>More Links</h4>
+                    <ul>
+                        <li><a href="#news">Latest News</a></li>
+                        <li><a href="#notes">Request Notes</a></li>
+                        <li><a href="#emergency">Emergency Supplies</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>Secure Telegram: @UEMShadowMkt</li>
+                        <li>Signal: +91 XXXXX XXXXX</li>
+                        <li>Anonymous Drop: Library Third Floor Locker #42</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 UEM Shadow Market. Not affiliated with UEM Jaipur. For educational purposes only.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // Background Animation
+        function createCubes() {
+            const background = document.querySelector('.background');
+            const count = 15;
+            
+            for (let i = 0; i < count; i++) {
+                const cube = document.createElement('div');
+                cube.classList.add('cube');
+                
+                const size = Math.random() * 100 + 50;
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * window.innerHeight;
+                const delay = Math.random() * 10;
+                const duration = Math.random() * 10 + 15;
+                
+                cube.style.width = `${size}px`;
+                cube.style.height = `${size}px`;
+                cube.style.left = `${posX}px`;
+                cube.style.top = `${posY}px`;
+                cube.style.animationDelay = `${delay}s`;
+                cube.style.animationDuration = `${duration}s`;
+                
+                background.appendChild(cube);
+            }
+        }
+        
+        // Mobile Navigation
+        function navSlide() {
+            const burger = document.querySelector('.mobile-menu');
+            const nav = document.querySelector('nav');
+            const navLinks = document.querySelectorAll('nav ul li');
+            
+            burger.addEventListener('click', () => {
+                // Toggle Nav
+                nav.classList.toggle('nav-active');
+                
+                // Animate Links
+                navLinks.forEach((link, index) => {
+                    if (link.style.animation) {
+                        link.style.animation = '';
+                    } else {
+                        link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                    }
+                });
+                
+                // Burger Animation
+                burger.classList.toggle('toggle');
+            });
+            
+            // Close menu when clicking on a link
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    nav.classList.remove('nav-active');
+                    burger.classList.remove('toggle');
+                    
+                    navLinks.forEach(link => {
+                        link.style.animation = '';
+                    });
+                });
+            });
+        }
+        
+        // Tabs Functionality
+        function initTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+                    
+                    // Remove active class from all buttons and contents
+                    tabBtns.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to current button and content
+                    btn.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        }
+        
+        // Accordion Functionality
+        function initAccordion() {
+            const accordions = document.querySelectorAll('.accordion');
+            
+            accordions.forEach(accordion => {
+                accordion.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    
+                    const panel = this.nextElementSibling;
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null;
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + 'px';
+                    }
+                });
+            });
+        }
+        
+        // Form Submission
+        function initForms() {
+            const teamForm = document.getElementById('team-form');
+            const notesForm = document.getElementById('notes-form');
+            
+            if (teamForm) {
+                teamForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Your application has been received. We will contact you through your secure channel if selected.');
+                    this.reset();
+                });
+            }
+            
+            if (notesForm) {
+                notesForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Your request has been received. We will process it according to your urgency level.');
+                    this.reset();
+                });
+            }
+        }
+        
+        // Scroll Animation
+        function scrollAnimation() {
+            const sections = document.querySelectorAll('section');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                const navLinks = document.querySelectorAll('nav ul li a');
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').slice(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        }
+        
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            createCubes();
+            navSlide();
+            initTabs();
+            initAccordion();
+            initForms();
+            scrollAnimation();
+        });
+    </script>
+</body>
+</html>
