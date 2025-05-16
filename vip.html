@@ -1278,322 +1278,281 @@
     }
 </style>
 
+
+    // Add these script tags to your HTML before your existing script
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"> </script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <script>
-    // VIP Chat System JavaScript
-    document.addEventListener('DOMContentLoaded', function() {
-        // DOM Elements
-        const vipAuth = document.getElementById('vip-auth');
-        const chatInterface = document.getElementById('chat-interface');
-        const vipKey = document.getElementById('vip-key');
-        const vipSubmit = document.getElementById('vip-submit');
-        const vipAuthError = document.getElementById('vip-auth-error');
-        const chatMessages = document.getElementById('chat-messages');
-        const chatInput = document.getElementById('chat-input');
-        const sendMessage = document.getElementById('send-message');
-        const refreshChat = document.getElementById('refresh-chat');
-        const logoutChat = document.getElementById('logout-chat');
-        const onlineCount = document.getElementById('online-count');
+// Replace the entire script section with this:
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM Elements
+    const vipAuth = document.getElementById('vip-auth');
+    const chatInterface = document.getElementById('chat-interface');
+    const vipKey = document.getElementById('vip-key');
+    const vipSubmit = document.getElementById('vip-submit');
+    const vipAuthError = document.getElementById('vip-auth-error');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInput = document.getElementById('chat-input');
+    const sendMessage = document.getElementById('send-message');
+    const refreshChat = document.getElementById('refresh-chat');
+    const logoutChat = document.getElementById('logout-chat');
+    const onlineCount = document.getElementById('online-count');
+    
+    // VIP Keys (in a real application, these would be stored securely on a server)
+    const validVipKeys = ['USM2025', 'SHADOWY25', 'UEMVIP'];
+    
+    // Chat Variables
+    let username = '';
+    let onlineUsers = 0;
+    
+    // Initialize Firebase
+    // Replace with your Firebase project config
+    const firebaseConfig = {
+        apiKey: "AIzaSyCTazgFzPrcfnHexhBBGZ4B0nns1RqLk-w",
+        authDomain: "shadows-c6e75.firebaseapp.com",
+        projectId: "shadows-c6e75",
+        storageBucket: "shadows-c6e75.firebasestorage.app",
+        messagingSenderId: "529425484235",
+        appId: "1:529425484235:web:2fb21a26b50c2e8c1d0e4e",
+        measurementId: "G-XN630031Q4"
+    };
+    
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const messagesRef = database.ref('messages');
+    const usersRef = database.ref('users');
+    
+    // Check for existing session
+    function checkSession() {
+        const storedKey = localStorage.getItem('vipKey');
+        const storedUsername = localStorage.getItem('username');
+        if (storedKey && validVipKeys.includes(storedKey)) {
+            username = storedUsername || 'User_' + Math.floor(Math.random() * 10000);
+            enterChatRoom();
+        }
+    }
+    
+    // Authenticate VIP Key
+    vipSubmit.addEventListener('click', function() {
+        const key = vipKey.value.trim();
         
-        // VIP Keys (in a real application, these would be stored securely on a server)
-        const validVipKeys = ['USM2025', 'SHADOWY25', 'UEMVIP'];
-        
-        // Chat Variables
-        let username = '';
-        let chatHistory = [];
-        let onlineUsers = 0;
-        
-        // Check for existing session
-        function checkSession() {
-            const storedKey = localStorage.getItem('vipKey');
-            if (storedKey && validVipKeys.includes(storedKey)) {
-                enterChatRoom();
-            }
+        if (key === '') {
+            showError('Please enter your VIP key');
+            return;
         }
         
-        // Authenticate VIP Key
-        vipSubmit.addEventListener('click', function() {
-            const key = vipKey.value.trim();
+        if (validVipKeys.includes(key)) {
+            // Save VIP key to session
+            localStorage.setItem('vipKey', key);
             
-            if (key === '') {
-                showError('Please enter your VIP key');
-                return;
-            }
+            // Generate random username (in a real app, users would register)
+            username = 'User_' + Math.floor(Math.random() * 10000);
+            localStorage.setItem('username', username);
             
-            if (validVipKeys.includes(key)) {
-                // Save VIP key to session
-                localStorage.setItem('vipKey', key);
-                
-                // Generate random username (in a real app, users would register)
-                username = 'User_' + Math.floor(Math.random() * 10000);
-                localStorage.setItem('username', username);
-                
-                enterChatRoom();
-            } else {
-                showError('Invalid VIP key. Please try again.');
-                vipKey.value = '';
-            }
-        });
-        
-        // Enter Chat Room
-        function enterChatRoom() {
-            vipAuth.classList.add('hidden');
-            chatInterface.classList.remove('hidden');
-            
-            // Load chat history (in a real app, this would be from a server)
-            loadChatHistory();
-            
-            // Simulate online users
-            simulateOnlineUsers();
-            
-            // Add system message
-            addSystemMessage('You have joined the chat');
-            scrollToBottom();
-        }
-        
-        // Show Error Message
-        function showError(message) {
-            vipAuthError.textContent = message;
-            setTimeout(() => {
-                vipAuthError.textContent = '';
-            }, 3000);
-        }
-        
-        // Add Message to Chat
-        function addMessage(message) {
-            const messageElement = document.createElement('div');
-            messageElement.className = `chat-message message-${message.type}`;
-            
-            if (message.type === 'system') {
-                messageElement.className = 'system-message';
-                messageElement.textContent = message.content;
-            } else {
-                const isCurrentUser = message.username === username;
-                messageElement.className = `chat-message message-${isCurrentUser ? 'self' : 'other'}`;
-                
-                const messageHeader = document.createElement('div');
-                messageHeader.className = 'message-header';
-                
-                const usernameElement = document.createElement('span');
-                usernameElement.className = 'message-username';
-                usernameElement.textContent = isCurrentUser ? 'You' : message.username;
-                
-                const timeElement = document.createElement('span');
-                timeElement.className = 'message-time';
-                timeElement.textContent = message.time;
-                
-                messageHeader.appendChild(usernameElement);
-                messageHeader.appendChild(timeElement);
-                
-                const messageContent = document.createElement('div');
-                messageContent.className = 'message-content';
-                messageContent.textContent = message.content;
-                
-                messageElement.appendChild(messageHeader);
-                messageElement.appendChild(messageContent);
-            }
-            
-            chatMessages.appendChild(messageElement);
-            scrollToBottom();
-            
-            // Save to chat history (in a real app, this would be sent to a server)
-            if (message.type !== 'system') {
-                chatHistory.push(message);
-                saveChatHistory();
-            }
-        }
-        
-        // Add System Message
-        function addSystemMessage(content) {
-            addMessage({
-                type: 'system',
-                content: content
-            });
-        }
-        
-        // Send Message
-        sendMessage.addEventListener('click', sendUserMessage);
-        chatInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendUserMessage();
-            }
-        });
-        
-        function sendUserMessage() {
-            const message = chatInput.value.trim();
-            
-            if (message === '') {
-                return;
-            }
-            
-            const now = new Date();
-            const timeString = now.getHours().toString().padStart(2, '0') + ':' + 
-                              now.getMinutes().toString().padStart(2, '0');
-            
-            addMessage({
-                type: 'user',
-                username: username,
-                content: message,
-                time: timeString
-            });
-            
-            chatInput.value = '';
-            
-            // Simulate response after random delay (in a real app, this would be real users)
-            simulateResponse();
-        }
-        
-        // Simulate Response (in a real app, this would be real users sending messages)
-        function simulateResponse() {
-            // Only simulate responses sometimes
-            if (Math.random() < 0.7) {
-                const botNames = ['ShadowTrader', 'UniHacker', 'CampusGhost', 'ByteMaster', 'StealthScholar'];
-                const responses = [
-                    'Anyone have the CSE301 notes?',
-                    'I just uploaded new lab material for ECE students.',
-                    'How was today\'s surprise quiz?',
-                    'Who\'s going to the hackathon next week?',
-                    'New project tutorials are up on the server.',
-                    'Has anyone taken Professor Kumar\'s class before?',
-                    'I need help with the network assignment.',
-                    'Just shared some rare materials on the drive.',
-                    'The microcontroller project is brutal this semester.',
-                    'Who wants to collaborate on the final project?'
-                ];
-                
-                setTimeout(() => {
-                    const now = new Date();
-                    const timeString = now.getHours().toString().padStart(2, '0') + ':' + 
-                                      now.getMinutes().toString().padStart(2, '0');
-                    
-                    addMessage({
-                        type: 'user',
-                        username: botNames[Math.floor(Math.random() * botNames.length)],
-                        content: responses[Math.floor(Math.random() * responses.length)],
-                        time: timeString
-                    });
-                }, Math.random() * 5000 + 1000);
-            }
-        }
-        
-        // Load Chat History (in a real app, this would be from a server)
-        function loadChatHistory() {
-            const history = localStorage.getItem('chatHistory');
-            if (history) {
-                chatHistory = JSON.parse(history);
-                
-                // Display last 10 messages
-                const messagesToShow = chatHistory.slice(-10);
-                messagesToShow.forEach(message => {
-                    addMessage(message);
-                });
-                
-                if (chatHistory.length > 10) {
-                    addSystemMessage('Showing the last 10 messages');
-                }
-            } else {
-                // Initialize with welcome messages
-                const welcomeMessages = [
-                    {
-                        type: 'user',
-                        username: 'ShadowAdmin',
-                        content: 'Welcome to the VIP Chat! This is where members can exchange information and resources.',
-                        time: '00:00'
-                    },
-                    {
-                        type: 'user',
-                        username: 'ModeratorX',
-                        content: 'Remember to follow the community guidelines. No sharing of personal information.',
-                        time: '00:01'
-                    }
-                ];
-                
-                welcomeMessages.forEach(message => {
-                    addMessage(message);
-                });
-            }
-        }
-        
-        // Save Chat History (in a real app, this would be to a server)
-        function saveChatHistory() {
-            // Keep only the last 100 messages
-            if (chatHistory.length > 100) {
-                chatHistory = chatHistory.slice(-100);
-            }
-            
-            localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
-        }
-        
-        // Simulate Online Users
-        function simulateOnlineUsers() {
-            // Base count of online users (3-8)
-            onlineUsers = Math.floor(Math.random() * 6) + 3;
-            updateOnlineCount();
-            
-            // Randomly change online count
-            setInterval(() => {
-                const change = Math.random() < 0.5 ? 1 : -1;
-                onlineUsers = Math.max(2, Math.min(15, onlineUsers + change));
-                updateOnlineCount();
-                
-                // Sometimes show join/leave messages
-                if (Math.random() < 0.3) {
-                    const names = ['ShadowCoder', 'NightOwl', 'DataDrifter', 'BitHunter', 'CodePhantom'];
-                    const randomName = names[Math.floor(Math.random() * names.length)];
-                    
-                    if (change > 0) {
-                        addSystemMessage(`${randomName} has joined the chat`);
-                    } else {
-                        addSystemMessage(`${randomName} has left the chat`);
-                    }
-                }
-            }, 30000); // Every 30 seconds
-        }
-        
-        // Update Online Count
-        function updateOnlineCount() {
-            onlineCount.textContent = onlineUsers;
-        }
-        
-        // Scroll to Bottom of Chat
-        function scrollToBottom() {
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-        
-        // Refresh Chat
-        refreshChat.addEventListener('click', function() {
-            // Visual feedback
-            const icon = refreshChat.querySelector('.refresh-icon');
-            icon.style.transform = 'rotate(180deg)';
-            
-            setTimeout(() => {
-                icon.style.transform = 'rotate(0deg)';
-            }, 500);
-            
-            // Clear and reload chat
-            chatMessages.innerHTML = '';
-            loadChatHistory();
-            
-            addSystemMessage('Chat refreshed');
-        });
-        
-        // Logout
-        logoutChat.addEventListener('click', function() {
-            localStorage.removeItem('vipKey');
-            chatInterface.classList.add('hidden');
-            vipAuth.classList.remove('hidden');
+            enterChatRoom();
+        } else {
+            showError('Invalid VIP key. Please try again.');
             vipKey.value = '';
-        });
-        
-        // Check for existing session on load
-        checkSession();
-        
-        // Add an initial system message if there's no chat history
-        if (!localStorage.getItem('chatHistory')) {
-            setTimeout(() => {
-                addSystemMessage('Welcome to the VIP Chat Room');
-            }, 1000);
         }
     });
+    
+    // Enter Chat Room
+    function enterChatRoom() {
+        vipAuth.classList.add('hidden');
+        chatInterface.classList.remove('hidden');
+        
+        // Add this user to online users
+        const userRef = usersRef.child(username);
+        userRef.set({
+            online: true,
+            lastActive: firebase.database.ServerValue.TIMESTAMP
+        });
+        
+        // Remove user when they disconnect
+        userRef.onDisconnect().remove();
+        
+        // Listen for messages
+        loadChatHistory();
+        
+        // Listen for online users changes
+        trackOnlineUsers();
+        
+        // Add system message
+        addSystemMessage('You have joined the chat');
+        
+        // Send join message to database
+        const now = new Date();
+        const timeString = now.getHours().toString().padStart(2, '0') + ':' + 
+                          now.getMinutes().toString().padStart(2, '0');
+        
+        messagesRef.push({
+            type: 'system',
+            content: `${username} has joined the chat`,
+            timestamp: firebase.database.ServerValue.TIMESTAMP,
+            time: timeString
+        });
+    }
+    
+    // Show Error Message
+    function showError(message) {
+        vipAuthError.textContent = message;
+        setTimeout(() => {
+            vipAuthError.textContent = '';
+        }, 3000);
+    }
+    
+    // Add Message to Chat
+    function addMessage(message) {
+        const messageElement = document.createElement('div');
+        
+        if (message.type === 'system') {
+            messageElement.className = 'system-message';
+            messageElement.textContent = message.content;
+        } else {
+            const isCurrentUser = message.username === username;
+            messageElement.className = `chat-message message-${isCurrentUser ? 'self' : 'other'}`;
+            
+            const messageHeader = document.createElement('div');
+            messageHeader.className = 'message-header';
+            
+            const usernameElement = document.createElement('span');
+            usernameElement.className = 'message-username';
+            usernameElement.textContent = isCurrentUser ? 'You' : message.username;
+            
+            const timeElement = document.createElement('span');
+            timeElement.className = 'message-time';
+            timeElement.textContent = message.time;
+            
+            messageHeader.appendChild(usernameElement);
+            messageHeader.appendChild(timeElement);
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+            messageContent.textContent = message.content;
+            
+            messageElement.appendChild(messageHeader);
+            messageElement.appendChild(messageContent);
+        }
+        
+        chatMessages.appendChild(messageElement);
+        scrollToBottom();
+    }
+    
+    // Add System Message (local only)
+    function addSystemMessage(content) {
+        const messageElement = document.createElement('div');
+        messageElement.className = 'system-message';
+        messageElement.textContent = content;
+        chatMessages.appendChild(messageElement);
+        scrollToBottom();
+    }
+    
+    // Send Message
+    sendMessage.addEventListener('click', sendUserMessage);
+    chatInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendUserMessage();
+        }
+    });
+    
+    function sendUserMessage() {
+        const message = chatInput.value.trim();
+        
+        if (message === '') {
+            return;
+        }
+        
+        const now = new Date();
+        const timeString = now.getHours().toString().padStart(2, '0') + ':' + 
+                          now.getMinutes().toString().padStart(2, '0');
+        
+        // Push message to Firebase
+        messagesRef.push({
+            type: 'user',
+            username: username,
+            content: message,
+            time: timeString,
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+        });
+        
+        chatInput.value = '';
+    }
+    
+    // Load Chat History from Firebase
+    function loadChatHistory() {
+        // Clear existing messages
+        chatMessages.innerHTML = '';
+        
+        // Add welcome message
+        const welcomeDiv = document.createElement('div');
+        welcomeDiv.className = 'chat-welcome';
+        welcomeDiv.innerHTML = '<h3>Welcome to the VIP Chat Lounge</h3><p>This is the start of the conversation. Be respectful to other members.</p>';
+        chatMessages.appendChild(welcomeDiv);
+        
+        // Get the last 20 messages
+        messagesRef.orderByChild('timestamp').limitToLast(20).on('child_added', snapshot => {
+            const message = snapshot.val();
+            addMessage(message);
+        });
+    }
+    
+    // Track Online Users
+    function trackOnlineUsers() {
+        usersRef.on('value', snapshot => {
+            const users = snapshot.val() || {};
+            onlineUsers = Object.keys(users).length;
+            updateOnlineCount();
+        });
+    }
+    
+    // Update Online Count
+    function updateOnlineCount() {
+        onlineCount.textContent = onlineUsers;
+    }
+    
+    // Scroll to Bottom of Chat
+    function scrollToBottom() {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    // Refresh Chat
+    refreshChat.addEventListener('click', function() {
+        // Visual feedback
+        const icon = refreshChat.querySelector('.refresh-icon');
+        icon.style.transform = 'rotate(180deg)';
+        
+        setTimeout(() => {
+            icon.style.transform = 'rotate(0deg)';
+        }, 500);
+        
+        // Clear and reload chat
+        loadChatHistory();
+        
+        addSystemMessage('Chat refreshed');
+    });
+    
+    // Logout
+    logoutChat.addEventListener('click', function() {
+        // Remove user from online users
+        if (username) {
+            usersRef.child(username).remove();
+        }
+        
+        localStorage.removeItem('vipKey');
+        localStorage.removeItem('username');
+        chatInterface.classList.add('hidden');
+        vipAuth.classList.remove('hidden');
+        vipKey.value = '';
+        
+        // Disconnect from Firebase
+        messagesRef.off();
+        usersRef.off();
+    });
+    
+    // Check for existing session on load
+    checkSession();
+});
 </script>
         
     <!-- Footer -->
