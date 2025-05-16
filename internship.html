@@ -5,7 +5,875 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://lh3.googleusercontent.com/pw/AP1GczPEyErGJ4vjrf7gb5324t1c65OwcS4IkrqBdCrKP1u7nRD2q9_RCLBHQaVjmZ3l50DmY6gIfEA3lGGPvLDDBQDmHb1Xi_WdEgkja5O3khKlFjxVBz29WB2_rysGQ_j-MWtB1tDHqDFNb-K1QFcSOtum=w725-h725-s-no-gm?authuser=3" type="image/png">
     <title>USM Internships</title>
-    <link rel="stylesheet" href="internships.css">
+    <style>
+        /* Global Styles */
+            @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #00ffff;
+            --primary-dark: #00cccc;
+            --secondary-color: #121212;
+            --text-color: #ffffff;
+            --accent-color: #720ae6;
+            --card-bg: rgba(0, 0, 0, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--text-color);
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Animation Background */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .cube {
+            position: absolute;
+            border: 1px solid var(--primary-color);
+            opacity: 0.2;
+            animation: cubeAnimation 20s linear infinite;
+        }
+
+        @keyframes cubeAnimation {
+            0% {
+                transform: rotate(0deg) translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.2;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: rotate(360deg) translateY(1000px) translateX(500px);
+                opacity: 0;
+            }
+        }
+        
+        /* Grid Lines */
+        .grid {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .grid:before, .grid:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(var(--primary-color) 0.5px, transparent 0.5px);
+            background-size: 100% 30px;
+            opacity: 0.1;
+        }
+        
+        .grid:after {
+            transform: rotate(90deg);
+        }
+        
+        /* Main Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--primary-color);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            width: 80px;
+            height: 80px;
+            margin-right: 1px;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .mobile-menu div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-color);
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 1000px;
+            padding: 20px;
+            z-index: 1;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            background: linear-gradient(90deg, var(--primary-dark), var(--primary-color));
+            border: none;
+            border-radius: 30px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            margin: -30px auto 50px;
+            max-width: 700px;
+            opacity: 0.7;
+            font-size: 1rem;
+        }
+        
+        /* News Section */
+        .news-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .news-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .news-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .news-content {
+            padding: 20px;
+        }
+        
+        .news-date {
+            font-size: 0.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .news-title {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .news-excerpt {
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+        
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .read-more:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .read-more:hover:after {
+            width: 100%;
+        }
+        
+        /* Events Section */
+        .events-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .event-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .event-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .event-content {
+            padding: 20px;
+        }
+        
+        .event-date {
+            font-size: 0.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .event-title {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .event-excerpt {
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+        
+        /* Services Section */
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-box {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .service-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .service-box h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .service-box p {
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
+        .price-tag {
+            background: rgba(0, 255, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-top: auto;
+        }
+        
+        .price-tag p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+        
+        /* Tabs for Services */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 10px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--primary-dark);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        
+        .tab-btn.active {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Projects Section */
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .project-img {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .project-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-title {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        
+        .project-description {
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+        
+        .project-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .status-available {
+            background-color: rgba(0, 255, 0, 0.2);
+            color: #00ff00;
+        }
+        
+        .status-rented {
+            background-color: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+        }
+        
+        .status-sold {
+            background-color: rgba(255, 0, 0, 0.2);
+            color: #ff3333;
+        }
+                
+        .project-price {
+            margin-top: auto;
+            background: rgba(0, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        /* Question Bank Section */
+        .question-bank-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .question-bank-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .question-bank-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .question-bank-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+        
+        .question-bank-card p {
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
+        .semester-select {
+            margin: 20px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--primary-dark);
+            border-radius: 5px;
+            color: var(--text-color);
+            width: 100%;
+        }
+        
+        .semester-select option {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .department-select {
+            margin: 20px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--primary-dark);
+            border-radius: 5px;
+            color: var(--text-color);
+            width: 100%;
+        }
+        
+        .department-select option {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+        
+        /* Join Team Section */
+        .join-team {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/600') center/cover;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .join-team:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.2), transparent);
+        }
+        
+        .join-team .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Request Notes Section */
+        .request-notes {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid var(--primary-dark);
+        }
+        
+        /* Emergency Supplies Section */
+        .emergency-supplies {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .emergency-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .emergency-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        
+        .emergency-card img {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .emergency-actions {
+            margin-top: 15px;
+        }
+        
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 0.8rem;
+            border-radius: 20px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--secondary-color);
+            padding: 50px 0 20px;
+            border-top: 1px solid var(--primary-dark);
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-links {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-links h4 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            nav {
+                position: fixed;
+                right: 0;
+                top: 0;
+                height: 100vh;
+                width: 70%;
+                background: rgba(0, 0, 0, 0.95);
+                transform: translateX(100%);
+                transition: transform 0.5s ease-in;
+                z-index: 1000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-left: 1px solid var(--primary-color);
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 15px 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+                z-index: 1001;
+            }
+            
+            .nav-active {
+                transform: translateX(0%);
+            }
+            
+            .mobile-menu.toggle .line1 {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            
+            .mobile-menu.toggle .line2 {
+                opacity: 0;
+            }
+            
+            .mobile-menu.toggle .line3 {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+        }  
+    </style>
+</head>
+
+<!-- Add this code right after the header section in your HTML -->
+<div class="top-buyer-banner">
+    <div class="top-buyer-content">
+        <span class="top-buyer-label">🏆 TOP BUYER THIS MONTH:</span>
+        <span class="top-buyer-name">MAUSIKTA KHETO</span>
+        <span class="top-buyer-stats">• 1 PURCHASES • 50₹ SPENT •</span>
+        <span class="top-buyer-label">🔥 PREMIUM MEMBER </span>
+        <span class="top-buyer-name">MAUSIKTA KHETO</span>
+        <span class="top-buyer-stats">• VIP ACCESS • PRIORITY ORDERS •</span>
+    </div>
+</div>
+
+<!-- Add this CSS to your style section -->
+<style>
+    .top-buyer-banner {
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 20, 20, 0.9), rgba(0, 0, 0, 0.8));
+        border-top: 1px solid var(--primary-color);
+        border-bottom: 1px solid var(--primary-color);
+        overflow: hidden;
+        position: fixed;
+        top: 100px;
+        left: 0;
+        width: 100%;
+        z-index: 99;
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    }
+
+    .top-buyer-content {
+        white-space: nowrap;
+        display: inline-block;
+        padding: 8px 0;
+        animation: scrollText 15s linear infinite; /* Speed doubled */
+    }
+
+    .top-buyer-label {
+        color: var(--primary-color);
+        font-weight: 700;
+        margin: 0 15px;
+        text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
+    }
+
+    .top-buyer-name {
+        color: white;
+        font-weight: 600;
+        margin-right: 10px;
+        letter-spacing: 1px;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    }
+
+    .top-buyer-stats {
+        color: rgba(255, 255, 255, 0.9);
+        font-style: italic;
+        font-weight: 500;
+        text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+        margin-right: 30px;
+    }
+
+    @keyframes scrollText {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+</style>
+
 </head>
 <body>
     <!-- Background Animation -->
@@ -38,246 +906,455 @@
             </div>
         </div>
     </header>
-
+<br><br><br>
     <!-- Top Buyer Banner -->
     <div class="top-buyer-banner">
         <div class="top-buyer-content">
-            <span class="top-buyer-label">🚀 HOT INTERNSHIPS:</span>
-            <span class="top-buyer-name">MICROSOFT</span>
-            <span class="top-buyer-stats">• SOFTWARE ENGINEERING • ₹50,000/MONTH •</span>
-            <span class="top-buyer-label">🔥 DEADLINE APPROACHING: </span>
-            <span class="top-buyer-name">AMAZON</span>
-            <span class="top-buyer-stats">• CLOUD SERVICES • APPLY BY MAY 25 •</span>
-            <span class="top-buyer-label">💼 JUST ADDED: </span>
-            <span class="top-buyer-name">INFOSYS</span>
-            <span class="top-buyer-stats">• AI RESEARCH • REMOTE OPTION •</span>
+            <span class="top-buyer-label">🏆 TOP BUYER THIS MONTH:</span>
+            <span class="top-buyer-name">MAUSIKTA KHETO</span>
+            <span class="top-buyer-stats">• 1 PURCHASES • 50₹ SPENT •</span>
+            <span class="top-buyer-label">🔥 PREMIUM MEMBER </span>
+            <span class="top-buyer-name">MAUSIKTA KHETO</span>
+            <span class="top-buyer-stats">• VIP ACCESS • PRIORITY ORDERS •</span>
         </div>
     </div>
 
-    <!-- Hero Section -->
+    <!-- Hero Section for Internships -->
     <section class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">Exclusive Internship Opportunities</h1>
-            <p class="hero-subtitle">Discover handpicked internships for UEM students with exclusive access through USM</p>
-            <div class="hero-actions">
-                <a href="#internships" class="btn">Browse Internships</a>
-                <a href="#premium" class="btn btn-secondary">Premium Access</a>
-            </div>
+            <h1 class="hero-title">Internship Opportunities</h1>
+            <p class="hero-subtitle">Discover exclusive internship positions sourced by our network for UEM students</p>
+            <div>
+                <a href="#available-internships" class="btn">Browse Internships</a>
+        </div>
         </div>
     </section>
 
-    <!-- Internship Filters -->
-    <section class="filters" id="filters">
+    <!-- Internship Categories Section -->
+    <section id="internship-categories">
         <div class="container">
-            <h2 class="section-title">Find Your Ideal Internship</h2>
-            <div class="filters-container">
-                <div class="filter-group">
-                    <label for="department">Department</label>
-                    <select id="department" class="filter-select">
-                        <option value="all">All Departments</option>
-                        <option value="cse">Computer Science</option>
-                        <option value="ece">Electronics & Communication</option>
-                        <option value="mech">Mechanical Engineering</option>
-                        <option value="civil">Civil Engineering</option>
-                        <option value="biotech">Biotechnology</option>
-                        <option value="management">Management</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="duration">Duration</label>
-                    <select id="duration" class="filter-select">
-                        <option value="all">Any Duration</option>
-                        <option value="1-month">1 Month</option>
-                        <option value="2-month">2 Months</option>
-                        <option value="3-month">3 Months</option>
-                        <option value="6-month">6 Months</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="stipend">Stipend Range</label>
-                    <select id="stipend" class="filter-select">
-                        <option value="all">Any Amount</option>
-                        <option value="unpaid">Unpaid</option>
-                        <option value="5000-10000">₹5,000 - ₹10,000</option>
-                        <option value="10000-20000">₹10,000 - ₹20,000</option>
-                        <option value="20000-plus">₹20,000+</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="location">Location</label>
-                    <select id="location" class="filter-select">
-                        <option value="all">All Locations</option>
-                        <option value="remote">Remote</option>
-                        <option value="jaipur">Jaipur</option>
-                        <option value="delhi">Delhi</option>
-                        <option value="bangalore">Bangalore</option>
-                        <option value="mumbai">Mumbai</option>
-                        <option value="hyderabad">Hyderabad</option>
-                    </select>
-                </div>
-                <button id="apply-filters" class="btn filter-btn">Apply Filters</button>
-                <button id="reset-filters" class="btn btn-secondary filter-btn">Reset</button>
+            <h2 class="section-title">Internship Categories</h2>
+            <p class="section-subtitle">Find opportunities that match your skills and career aspirations</p>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="all-internships">All Internships</button>
+                <button class="tab-btn" data-tab="tech-internships">Tech</button>
+                <button class="tab-btn" data-tab="design-internships">Design</button>
+                <button class="tab-btn" data-tab="marketing-internships">Marketing</button>
+                <button class="tab-btn" data-tab="business-internships">Business</button>
             </div>
         </div>
     </section>
 
-    <!-- Internships Section -->
-    <section class="internships" id="internships">
+    <!-- Available Internships Section -->
+    <section id="available-internships">
         <div class="container">
             <h2 class="section-title">Available Internships</h2>
-            <p class="section-subtitle">Exclusive opportunities for UEM students</p>
+            <p class="section-subtitle">Apply now for these limited positions exclusively shared with our network</p>
             
-            <div class="internships-container" id="internships-container">
-                <!-- Internship cards will be dynamically loaded here -->
+            <div class="tab-content active" id="all-internships">
+                <div class="projects-container">
+                    <!-- Internship Card 1 -->
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/320" alt="Software Development Intern" class="project-img">
+                        <div class="project-content">
+                            <span class="project-status status-available">New Opportunity</span>
+                            <h3 class="project-title">Software Development Intern</h3>
+                            <p class="project-description">Join a fast-growing startup and gain hands-on experience with modern web technologies including React, Node.js, and MongoDB.</p>
+                            <ul style="list-style: none; margin-bottom: 20px; padding-left: 0;">
+                                <li style="margin-bottom: 8px;">🏢 <strong>Company:</strong> TechNova Solutions</li>
+                                <li style="margin-bottom: 8px;">📍 <strong>Location:</strong> Remote / Jaipur</li>
+                                <li style="margin-bottom: 8px;">⏱️ <strong>Duration:</strong> 3 months</li>
+                                <li style="margin-bottom: 8px;">💰 <strong>Stipend:</strong> ₹15,000/month</li>
+                            </ul>
+                            <div class="project-price">
+                                <p>Application Deadline: June 15, 2025</p>
+                                <a href="#request-internship" class="btn" style="font-size: 0.9rem; margin-top: 10px; background: var(--accent-color); color: #ffffff;">Request Referral</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Internship Card 2 -->
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/320" alt="UI/UX Design Intern" class="project-img">
+                        <div class="project-content">
+                            <span class="project-status status-available">Hot Opportunity</span>
+                            <h3 class="project-title">UI/UX Design Intern</h3>
+                            <p class="project-description">Create beautiful user interfaces and enhance user experiences for a design agency working with international clients.</p>
+                            <ul style="list-style: none; margin-bottom: 20px; padding-left: 0;">
+                                <li style="margin-bottom: 8px;">🏢 <strong>Company:</strong> DesignCraft Studio</li>
+                                <li style="margin-bottom: 8px;">📍 <strong>Location:</strong> Hybrid (2 days office)</li>
+                                <li style="margin-bottom: 8px;">⏱️ <strong>Duration:</strong> 6 months</li>
+                                <li style="margin-bottom: 8px;">💰 <strong>Stipend:</strong> ₹12,000/month</li>
+                            </ul>
+                            <div class="project-price">
+                                <p>Application Deadline: May 30, 2025</p>
+                                <a href="#request-internship" class="btn" style="font-size: 0.9rem; margin-top: 10px; background: var(--accent-color); color: #ffffff;">Request Referral</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Internship Card 3 -->
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/320" alt="Digital Marketing Intern" class="project-img">
+                        <div class="project-content">
+                            <span class="project-status status-available">Limited Spots</span>
+                            <h3 class="project-title">Digital Marketing Intern</h3>
+                            <p class="project-description">Learn and apply social media marketing, SEO, and content strategies for an e-commerce platform expanding in India.</p>
+                            <ul style="list-style: none; margin-bottom: 20px; padding-left: 0;">
+                                <li style="margin-bottom: 8px;">🏢 <strong>Company:</strong> ShopWave</li>
+                                <li style="margin-bottom: 8px;">📍 <strong>Location:</strong> Remote</li>
+                                <li style="margin-bottom: 8px;">⏱️ <strong>Duration:</strong> 4 months</li>
+                                <li style="margin-bottom: 8px;">💰 <strong>Stipend:</strong> ₹10,000/month + Incentives</li>
+                            </ul>
+                            <div class="project-price">
+                                <p>Application Deadline: June 5, 2025</p>
+                                <a href="#request-internship" class="btn" style="font-size: 0.9rem; margin-top: 10px; background: var(--accent-color); color: #ffffff;">Request Referral</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Internship Card 4 -->
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/320" alt="ML/AI Research Intern" class="project-img">
+                        <div class="project-content">
+                            <span class="project-status status-available">Exclusive Opportunity</span>
+                            <h3 class="project-title">ML/AI Research Intern</h3>
+                            <p class="project-description">Work on cutting-edge machine learning projects with PhD mentors in a research lab environment funded by top tech companies.</p>
+                            <ul style="list-style: none; margin-bottom: 20px; padding-left: 0;">
+                                <li style="margin-bottom: 8px;">🏢 <strong>Company:</strong> AInnova Research</li>
+                                <li style="margin-bottom: 8px;">📍 <strong>Location:</strong> Hybrid (Bangalore)</li>
+                                <li style="margin-bottom: 8px;">⏱️ <strong>Duration:</strong> 6 months</li>
+                                <li style="margin-bottom: 8px;">💰 <strong>Stipend:</strong> ₹25,000/month</li>
+                            </ul>
+                            <div class="project-price">
+                                <p>Application Deadline: May 25, 2025</p>
+                                <a href="#request-internship" class="btn" style="font-size: 0.9rem; margin-top: 10px; background: var(--accent-color); color: #ffffff;">Request Referral</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Internship Card 5 -->
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/320" alt="Data Analytics Intern" class="project-img">
+                        <div class="project-content">
+                            <span class="project-status status-available">Verified Opportunity</span>
+                            <h3 class="project-title">Data Analytics Intern</h3>
+                            <p class="project-description">Analyze business data and create insightful visualizations for a fast-growing fintech company. Great for building your portfolio.</p>
+                            <ul style="list-style: none; margin-bottom: 20px; padding-left: 0;">
+                                <li style="margin-bottom: 8px;">🏢 <strong>Company:</strong> FinEdge</li>
+                                <li style="margin-bottom: 8px;">📍 <strong>Location:</strong> Remote</li>
+                                <li style="margin-bottom: 8px;">⏱️ <strong>Duration:</strong> 3 months</li>
+                                <li style="margin-bottom: 8px;">💰 <strong>Stipend:</strong> ₹18,000/month</li>
+                            </ul>
+                            <div class="project-price">
+                                <p>Application Deadline: June 10, 2025</p>
+                                <a href="#request-internship" class="btn" style="font-size: 0.9rem; margin-top: 10px; background: var(--accent-color); color: #ffffff;">Request Referral</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Internship Card 6 -->
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/320" alt="Content Writing Intern" class="project-img">
+                        <div class="project-content">
+                            <span class="project-status status-available">Beginner Friendly</span>
+                            <h3 class="project-title">Content Writing Intern</h3>
+                            <p class="project-description">Craft engaging articles, blog posts, and social media content for an education technology platform serving college students.</p>
+                            <ul style="list-style: none; margin-bottom: 20px; padding-left: 0;">
+                                <li style="margin-bottom: 8px;">🏢 <strong>Company:</strong> EduPulse</li>
+                                <li style="margin-bottom: 8px;">📍 <strong>Location:</strong> Remote</li>
+                                <li style="margin-bottom: 8px;">⏱️ <strong>Duration:</strong> 4 months</li>
+                                <li style="margin-bottom: 8px;">💰 <strong>Stipend:</strong> ₹8,000/month + Publication Credits</li>
+                            </ul>
+                            <div class="project-price">
+                                <p>Application Deadline: June 20, 2025</p>
+                                <a href="#request-internship" class="btn" style="font-size: 0.9rem; margin-top: 10px; background: var(--accent-color); color: #ffffff;">Request Referral</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <div class="pagination">
-                <button id="load-more" class="btn">Load More</button>
+            <div class="tab-content" id="tech-internships">
+                <div class="projects-container">
+                    <!-- Tech Internship Card 1 -->
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/320" alt="Software Development Intern" class="project-img">
+                        <div class="project-content">
+                            <span class="project-status status-available">New Opportunity</span>
+                            <h3 class="project-title">Software Development Intern</h3>
+                            <p class="project-description">Join a fast-growing startup and gain hands-on experience with modern web technologies including React, Node.js, and MongoDB.</p>
+                            <ul style="list-style: none; margin-bottom: 20px; padding-left: 0;">
+                                <li style="margin-bottom: 8px;">🏢 <strong>Company:</strong> TechNova Solutions</li>
+                                <li style="margin-bottom: 8px;">📍 <strong>Location:</strong> Remote / Jaipur</li>
+                                <li style="margin-bottom: 8px;">⏱️ <strong>Duration:</strong> 3 months</li>
+                                <li style="margin-bottom: 8px;">💰 <strong>Stipend:</strong> ₹15,000/month</li>
+                            </ul>
+                            <div class="project-price">
+                                <p>Application Deadline: June 15, 2025</p>
+                                <a href="#request-internship" class="btn" style="font-size: 0.9rem; margin-top: 10px; background: var(--accent-color); color: #ffffff;">Request Referral</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tech Internship Card 2 -->
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/320" alt="ML/AI Research Intern" class="project-img">
+                        <div class="project-content">
+                            <span class="project-status status-available">Exclusive Opportunity</span>
+                            <h3 class="project-title">ML/AI Research Intern</h3>
+                            <p class="project-description">Work on cutting-edge machine learning projects with PhD mentors in a research lab environment funded by top tech companies.</p>
+                            <ul style="list-style: none; margin-bottom: 20px; padding-left: 0;">
+                                <li style="margin-bottom: 8px;">🏢 <strong>Company:</strong> AInnova Research</li>
+                                <li style="margin-bottom: 8px;">📍 <strong>Location:</strong> Hybrid (Bangalore)</li>
+                                <li style="margin-bottom: 8px;">⏱️ <strong>Duration:</strong> 6 months</li>
+                                <li style="margin-bottom: 8px;">💰 <strong>Stipend:</strong> ₹25,000/month</li>
+                            </ul>
+                            <div class="project-price">
+                                <p>Application Deadline: May 25, 2025</p>
+                                <a href="#request-internship" class="btn" style="font-size: 0.9rem; margin-top: 10px; background: var(--accent-color); color: #ffffff;">Request Referral</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tech Internship Card 3 -->
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/320" alt="Data Analytics Intern" class="project-img">
+                        <div class="project-content">
+                            <span class="project-status status-available">Verified Opportunity</span>
+                            <h3 class="project-title">Data Analytics Intern</h3>
+                            <p class="project-description">Analyze business data and create insightful visualizations for a fast-growing fintech company. Great for building your portfolio.</p>
+                            <ul style="list-style: none; margin-bottom: 20px; padding-left: 0;">
+                                <li style="margin-bottom: 8px;">🏢 <strong>Company:</strong> FinEdge</li>
+                                <li style="margin-bottom: 8px;">📍 <strong>Location:</strong> Remote</li>
+                                <li style="margin-bottom: 8px;">⏱️ <strong>Duration:</strong> 3 months</li>
+                                <li style="margin-bottom: 8px;">💰 <strong>Stipend:</strong> ₹18,000/month</li>
+                            </ul>
+                            <div class="project-price">
+                                <p>Application Deadline: June 10, 2025</p>
+                                <a href="#request-internship" class="btn" style="font-size: 0.9rem; margin-top: 10px; background: var(--accent-color); color: #ffffff;">Request Referral</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="design-internships">
+                <div class="projects-container">
+                    <!-- Design Internship Card -->
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/320" alt="UI/UX Design Intern" class="project-img">
+                        <div class="project-content">
+                            <span class="project-status status-available">Hot Opportunity</span>
+                            <h3 class="project-title">UI/UX Design Intern</h3>
+                            <p class="project-description">Create beautiful user interfaces and enhance user experiences for a design agency working with international clients.</p>
+                            <ul style="list-style: none; margin-bottom: 20px; padding-left: 0;">
+                                <li style="margin-bottom: 8px;">🏢 <strong>Company:</strong> DesignCraft Studio</li>
+                                <li style="margin-bottom: 8px;">📍 <strong>Location:</strong> Hybrid (2 days office)</li>
+                                <li style="margin-bottom: 8px;">⏱️ <strong>Duration:</strong> 6 months</li>
+                                <li style="margin-bottom: 8px;">💰 <strong>Stipend:</strong> ₹12,000/month</li>
+                            </ul>
+                            <div class="project-price">
+                                <p>Application Deadline: May 30, 2025</p>
+                                <a href="#request-internship" class="btn" style="font-size: 0.9rem; margin-top: 10px; background: var(--accent-color); color: #ffffff;">Request Referral</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Design Internship Card 2 -->
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/320" alt="Graphic Design Intern" class="project-img">
+                        <div class="project-content">
+                            <span class="project-status status-available">New Listing</span>
+                            <h3 class="project-title">Graphic Design Intern</h3>
+                            <p class="project-description">Create marketing materials, social media graphics and branding assets for a variety of clients across different industries.</p>
+                            <ul style="list-style: none; margin-bottom: 20px; padding-left: 0;">
+                                <li style="margin-bottom: 8px;">🏢 <strong>Company:</strong> PixelPerfect Studio</li>
+                                <li style="margin-bottom: 8px;">📍 <strong>Location:</strong> Remote</li>
+                                <li style="margin-bottom: 8px;">⏱️ <strong>Duration:</strong> 3 months</li>
+                                <li style="margin-bottom: 8px;">💰 <strong>Stipend:</strong> ₹10,000/month</li>
+                            </ul>
+                            <div class="project-price">
+                                <p>Application Deadline: June 8, 2025</p>
+                                <a href="#request-internship" class="btn" style="font-size: 0.9rem; margin-top: 10px; background: var(--accent-color); color: #ffffff;">Request Referral</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="marketing-internships">
+                <div class="projects-container">
+                    <!-- Marketing Internship Card -->
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/320" alt="Digital Marketing Intern" class="project-img">
+                        <div class="project-content">
+                            <span class="project-status status-available">Limited Spots</span>
+                            <h3 class="project-title">Digital Marketing Intern</h3>
+                            <p class="project-description">Learn and apply social media marketing, SEO, and content strategies for an e-commerce platform expanding in India.</p>
+                            <ul style="list-style: none; margin-bottom: 20px; padding-left: 0;">
+                                <li style="margin-bottom: 8px;">🏢 <strong>Company:</strong> ShopWave</li>
+                                <li style="margin-bottom: 8px;">📍 <strong>Location:</strong> Remote</li>
+                                <li style="margin-bottom: 8px;">⏱️ <strong>Duration:</strong> 4 months</li>
+                                <li style="margin-bottom: 8px;">💰 <strong>Stipend:</strong> ₹10,000/month + Incentives</li>
+                            </ul>
+                            <div class="project-price">
+                                <p>Application Deadline: June 5, 2025</p>
+                                <a href="#request-internship" class="btn" style="font-size: 0.9rem; margin-top: 10px; background: var(--accent-color); color: #ffffff;">Request Referral</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Marketing Internship Card 2 -->
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/320" alt="Content Writing Intern" class="project-img">
+                        <div class="project-content">
+                            <span class="project-status status-available">Beginner Friendly</span>
+                            <h3 class="project-title">Content Writing Intern</h3>
+                            <p class="project-description">Craft engaging articles, blog posts, and social media content for an education technology platform serving college students.</p>
+                            <ul style="list-style: none; margin-bottom: 20px; padding-left: 0;">
+                                <li style="margin-bottom: 8px;">🏢 <strong>Company:</strong> EduPulse</li>
+                                <li style="margin-bottom: 8px;">📍 <strong>Location:</strong> Remote</li>
+                                <li style="margin-bottom: 8px;">⏱️ <strong>Duration:</strong> 4 months</li>
+                                <li style="margin-bottom: 8px;">💰 <strong>Stipend:</strong> ₹8,000/month + Publication Credits</li>
+                            </ul>
+                            <div class="project-price">
+                                <p>Application Deadline: June 20, 2025</p>
+                                <a href="#request-internship" class="btn" style="font-size: 0.9rem; margin-top: 10px; background: var(--accent-color); color: #ffffff;">Request Referral</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="business-internships">
+                <div class="projects-container">
+                    <!-- Business Internship Card -->
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/320" alt="Business Development Intern" class="project-img">
+                        <div class="project-content">
+                            <span class="project-status status-available">High Demand</span>
+                            <h3 class="project-title">Business Development Intern</h3>
+                            <p class="project-description">Work directly with the founders to grow a B2B SaaS startup. Learn client acquisition, partnership building, and market research.</p>
+                            <ul style="list-style: none; margin-bottom: 20px; padding-left: 0;">
+                                <li style="margin-bottom: 8px;">🏢 <strong>Company:</strong> GrowthPilot</li>
+                                <li style="margin-bottom: 8px;">📍 <strong>Location:</strong> Hybrid (Delhi NCR)</li>
+                                <li style="margin-bottom: 8px;">⏱️ <strong>Duration:</strong> 3 months</li>
+                                <li style="margin-bottom: 8px;">💰 <strong>Stipend:</strong> ₹12,000/month + Performance Bonus</li>
+                            </ul>
+                            <div class="project-price">
+                                <p>Application Deadline: June 12, 2025</p>
+                                <a href="#request-internship" class="btn" style="font-size: 0.9rem; margin-top: 10px; background: var(--accent-color); color: #ffffff;">Request Referral</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Business Internship Card 2 -->
+                    <div class="project-card">
+                        <img src="/api/placeholder/400/320" alt="Finance Intern" class="project-img">
+                        <div class="project-content">
+                            <span class="project-status status-available">Premium Opportunity</span>
+                            <h3 class="project-title">Finance Intern</h3>
+                            <p class="project-description">Gain exposure to financial analysis, reporting, and investment research at a boutique financial services firm.</p>
+                            <ul style="list-style: none; margin-bottom: 20px; padding-left: 0;">
+                                <li style="margin-bottom: 8px;">🏢 <strong>Company:</strong> Apex Financial</li>
+                                <li style="margin-bottom: 8px;">📍 <strong>Location:</strong> Mumbai (Office)</li>
+                                <li style="margin-bottom: 8px;">⏱️ <strong>Duration:</strong> 6 months</li>
+                                <li style="margin-bottom: 8px;">💰 <strong>Stipend:</strong> ₹20,000/month</li>
+                            </ul>
+                            <div class="project-price">
+                                <p>Application Deadline: May 30, 2025</p>
+                                <a href="#request-internship" class="btn" style="font-size: 0.9rem; margin-top: 10px; background: var(--accent-color); color: #ffffff;">Request Referral</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Premium Access Section -->
-    <section class="premium" id="premium">
-        <div class="container">
-            <h2 class="section-title">Premium Internship Access</h2>
-            <div class="premium-container">
-                <div class="premium-card">
-                    <div class="premium-header">
-                        <h3>Basic Access</h3>
-                        <div class="premium-price">Free</div>
-                    </div>
-                    <div class="premium-features">
-                        <ul>
-                            <li>View public internship listings</li>
-                            <li>Basic application support</li>
-                            <li>Standard response time</li>
-                            <li class="not-included">Interview preparation</li>
-                            <li class="not-included">Exclusive internships</li>
-                            <li class="not-included">Priority application</li>
-                        </ul>
-                    </div>
-                    <div class="premium-action">
-                        <a href="#" class="btn btn-secondary">Current Plan</a>
-                    </div>
-                </div>
-                
-                <div class="premium-card highlighted">
-                    <div class="premium-badge">Recommended</div>
-                    <div class="premium-header">
-                        <h3>Premium Access</h3>
-                        <div class="premium-price">₹999<span>/semester</span></div>
-                    </div>
-                    <div class="premium-features">
-                        <ul>
-                            <li>All basic features</li>
-                            <li>Access to exclusive internships</li>
-                            <li>Priority application process</li>
-                            <li>Resume & cover letter review</li>
-                            <li>Basic interview preparation</li>
-                            <li class="not-included">Direct referrals</li>
-                        </ul>
-                    </div>
-                    <div class="premium-action">
-                        <a href="#" class="btn">Upgrade Now</a>
-                    </div>
-                </div>
-                
-                <div class="premium-card">
-                    <div class="premium-header">
-                        <h3>Elite Access</h3>
-                        <div class="premium-price">₹2499<span>/semester</span></div>
-                    </div>
-                    <div class="premium-features">
-                        <ul>
-                            <li>All premium features</li>
-                            <li>Direct referrals to companies</li>
-                            <li>Guaranteed internship placement</li>
-                            <li>Advanced interview coaching</li>
-                            <li>24/7 priority support</li>
-                            <li>Exclusive networking events</li>
-                        </ul>
-                    </div>
-                    <div class="premium-action">
-                        <a href="#" class="btn btn-secondary">Upgrade Now</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Success Stories Section -->
-    <section class="success-stories">
+    <section id="success-stories">
         <div class="container">
             <h2 class="section-title">Success Stories</h2>
-            <p class="section-subtitle">Students who secured internships through USM</p>
+            <p class="section-subtitle">See how our network helped these students land their dream internships</p>
             
-            <div class="testimonials">
-                <div class="testimonial">
-                    <div class="testimonial-img">
-                        <img src="/api/placeholder/150/150" alt="Student portrait">
+            <div class="testimonials-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; margin-top: 40px;">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card" style="background: var(--light-color); border-radius: 10px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    <div style="width: 80px; height: 80px; border-radius: 50%; background: #f0f0f0; margin: 0 auto 20px; overflow: hidden;">
+                        <img src="/api/placeholder/80/80" alt="Student testimonial" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
-                    <div class="testimonial-content">
-                        <p>"USM helped me secure a dream internship at Google. The premium access was worth every rupee and gave me an edge over other applicants."</p>
-                        <div class="testimonial-author">
-                            <h4>Akshay Patel</h4>
-                            <p>B.Tech CSE, 4th Year</p>
-                        </div>
-                    </div>
+                    <h4 style="text-align: center; margin-bottom: 10px;">Rohit Sharma</h4>
+                    <p style="text-align: center; color: var(--accent-color); font-size: 0.9rem; margin-bottom: 15px;">Software Engineering Intern at Microsoft</p>
+                    <p style="text-align: center; font-style: italic;">"The referral I received through this network was a game-changer. I went from being just another applicant to getting a direct interview with the hiring manager."</p>
                 </div>
                 
-                <div class="testimonial">
-                    <div class="testimonial-img">
-                        <img src="/api/placeholder/150/150" alt="Student portrait">
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card" style="background: var(--light-color); border-radius: 10px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    <div style="width: 80px; height: 80px; border-radius: 50%; background: #f0f0f0; margin: 0 auto 20px; overflow: hidden;">
+                        <img src="/api/placeholder/80/80" alt="Student testimonial" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
-                    <div class="testimonial-content">
-                        <p>"I was struggling to find the right opportunity until I discovered USM. Their exclusive listings and application support made all the difference."</p>
-                        <div class="testimonial-author">
-                            <h4>Neha Sharma</h4>
-                            <p>B.Tech ECE, 3rd Year</p>
-                        </div>
-                    </div>
+                    <h4 style="text-align: center; margin-bottom: 10px;">Priya Patel</h4>
+                    <p style="text-align: center; color: var(--accent-color); font-size: 0.9rem; margin-bottom: 15px;">UI/UX Design Intern at Flipkart</p>
+                    <p style="text-align: center; font-style: italic;">"I was struggling to even get a response from companies. With the referral from this network, I landed an internship at my dream company within two weeks!"</p>
                 </div>
                 
-                <div class="testimonial">
-                    <div class="testimonial-img">
-                        <img src="/api/placeholder/150/150" alt="Student portrait">
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card" style="background: var(--light-color); border-radius: 10px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    <div style="width: 80px; height: 80px; border-radius: 50%; background: #f0f0f0; margin: 0 auto 20px; overflow: hidden;">
+                        <img src="/api/placeholder/80/80" alt="Student testimonial" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
-                    <div class="testimonial-content">
-                        <p>"The Elite Access package got me a direct referral to Amazon. The interview coaching helped me convert the opportunity into a pre-placement offer!"</p>
-                        <div class="testimonial-author">
-                            <h4>Rahul Verma</h4>
-                            <p>B.Tech Mechanical, 4th Year</p>
-                        </div>
-                    </div>
+                    <h4 style="text-align: center; margin-bottom: 10px;">Amit Kumar</h4>
+                    <p style="text-align: center; color: var(--accent-color); font-size: 0.9rem; margin-bottom: 15px;">Data Science Intern at Amazon</p>
+                    <p style="text-align: center; font-style: italic;">"The guidance I received before my interview was invaluable. My mentor knew exactly what the company was looking for and helped me prepare accordingly."</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Join Team Section -->
-    <section id="join-team" class="join-team">
+    <!-- FAQ Section -->
+    <section id="faq">
         <div class="container">
-            <h2 class="section-title">Join Our Team</h2>
-            <p class="section-subtitle" style="color: white; opacity: 0.9;">Become part of our growing network of talented students</p>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-subtitle">Everything you need to know about our internship referral service</p>
             
-            <div style="max-width: 700px; margin: 0 auto; background: rgba(0, 0, 0, 0.7); padding: 30px; border-radius: 10px;">
-                <p style="margin-bottom: 20px;">We're looking for talented students who can contribute to our community. If you excel in:</p>
-                <ul style="list-style-type: none; margin-bottom: 30px; text-align: left; display: inline-block;">
-                    <li style="margin-bottom: 10px;">✓ Project development (hardware/software)</li>
-                    <li style="margin-bottom: 10px;">✓ Content writing and documentation</li>
-                    <li style="margin-bottom: 10px;">✓ Graphic design and presentation making</li>
-                    <li style="margin-bottom: 10px;">✓ Marketing and campus outreach</li>
-                    <li style="margin-bottom: 10px;">✓ Internship coordination and company relations</li>
-                </ul>
+            <div class="faq-container" style="max-width: 800px; margin: 40px auto 0;">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item" style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
+                    <h3 style="margin-bottom: 10px; color: var(--primary-color);">Is this service free for UEM students?</h3>
+                    <p>Yes, this service is completely free for all currently enrolled UEM students. We believe in helping our fellow students succeed without any financial barriers.</p>
+                </div>
                 
-                <p style="margin-bottom: 30px;">Join our team to earn while you learn and build valuable skills for your future career.</p>
+                <!-- FAQ Item 2 -->
+                <div class="faq-item" style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
+                    <h3 style="margin-bottom: 10px; color: var(--primary-color);">How soon will I hear back after submitting my request?</h3>
+                    <p>We typically respond within 48-72 hours. For high-demand or urgent opportunities with close deadlines, we prioritize those requests and may respond sooner.</p>
+                </div>
                 
-                <a href="https://forms.google.com/join-team" class="btn" style="background: var(--accent-color); padding: 15px 40px; font-size: 1.1rem; color:#ffffff">Apply Now</a>
+                <!-- FAQ Item 3 -->
+                <div class="faq-item" style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
+                    <h3 style="margin-bottom: 10px; color: var(--primary-color);">Can I request referrals for companies not listed on your website?</h3>
+                    <p>Absolutely! We have an extensive network across various industries. If you have a specific company in mind that's not listed, please mention it in your request form, and we'll do our best to find a connection.</p>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="faq-item" style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
+                    <h3 style="margin-bottom: 10px; color: var(--primary-color);">What should I do to maximize my chances of getting referred?</h3>
+                    <p>Make sure your resume is updated and tailored to the position, provide a comprehensive list of your skills, and clearly explain why you're interested in the role. The more information you provide, the better we can match you with the right connection.</p>
+                </div>
+                
+                <!-- FAQ Item 5 -->
+                <div class="faq-item">
+                    <h3 style="margin-bottom: 10px; color: var(--primary-color);">Do you guarantee internship placements?</h3>
+                    <p>While we can't guarantee placements, our referrals significantly increase your chances of getting an interview. Our network has a 70% success rate in helping students secure at least an initial interview.</p>
+                </div>
             </div>
         </div>
     </section>
-
+          
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -296,16 +1373,15 @@
                         <li><a href="https://dark-97o.github.io/index.html">Home</a></li>
                         <li><a href="https://dark-97o.github.io/news.html">News</a></li>
                         <li><a href="https://dark-97o.github.io/service.html">Services</a></li>
-                        <li><a href="https://dark-97o.github.io/project.html">Projects</a></li>
+                        <li><a href="#projects">Projects</a></li>
                         <li><a href="https://dark-97o.github.io/question.html">Question Bank</a></li>
-                        <li><a href="internships.html">Internships</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-links">
                     <h4>Contact</h4>
                     <ul>
-                        <li><a href="#join-team">Join Team</a></li>
+                        <li><a href="https://dark-97o.github.io/join.html">Join Team</a></li>
                         <li><a href="https://t.me/uemshadowmarket">Telegram Channel</a></li>
                         <li><a href="https://wa.me/1234567890">WhatsApp</a></li>
                         <li><a href="mailto:contact@uemshadowmarket.com">Email Us</a></li>
@@ -319,7 +1395,177 @@
             </div>
         </div>
     </footer>
+
+<style>
+/* Footer Styles with Fixed Padding */
+footer {
+    background-color: #0c0c14;
+    color: #fff;
+    padding: 20px 0 1px;
+    position: relative;
+    z-index: 10;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 1px;
+}
+
+.footer-logo {
+    flex: 1;
+    min-width: 280px;
+    max-width: 400px;
+}
+
+.footer-links {
+    flex: 0 0 auto;
+    min-width: 180px;
+    padding: 0 20px;
+}
+
+.footer-links h4 {
+    color: #0ef;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    position: relative;
+}
+
+.footer-links h4:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    height: 2px;
+    width: 30px;
+    background: linear-gradient(90deg, #0ef, transparent);
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 12px;
+}
+
+.footer-links ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+    position: relative;
+    padding-left: 15px;
+}
+
+.footer-links ul li a:before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: #0ef;
+}
+
+.footer-links ul li a:hover {
+    opacity: 1;
+    color: #0ef;
+    padding-left: 20px;
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0.7;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 30px;
+    }
     
-    <script src="internships.js"></script>
+    .footer-logo, .footer-links {
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+    }
+}
+</style>
+    
+    <!-- JavaScript -->
+    <script>
+        // Mobile Navigation
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const nav = document.querySelector('nav');
+        
+        mobileMenu.addEventListener('click', () => {
+            nav.classList.toggle('nav-active');
+            mobileMenu.classList.toggle('toggle');
+        });
+        
+        // Services Tabs
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and contents
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                btn.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Create floating cyberpunk-style cubes in background
+        function createCubes() {
+            const background = document.querySelector('.background');
+            const numberOfCubes = 20;
+            
+            for (let i = 0; i < numberOfCubes; i++) {
+                const cube = document.createElement('div');
+                cube.classList.add('cube');
+                
+                // Random size between 30px and 100px
+                const size = Math.random() * 70 + 30;
+                cube.style.width = `${size}px`;
+                cube.style.height = `${size}px`;
+                
+                // Random position
+                cube.style.left = `${Math.random() * 100}vw`;
+                cube.style.top = `${Math.random() * 100}vh`;
+                
+                // Random animation duration between 15s and 30s
+                cube.style.animationDuration = `${Math.random() * 15 + 15}s`;
+                
+                // Random animation delay
+                cube.style.animationDelay = `${Math.random() * 5}s`;
+                
+                background.appendChild(cube);
+            }
+        }
+        
+        // Initialize animations
+        createCubes();
+        
+        // Handle scrolling
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.8)';
+            }
+        });
+    </script>
 </body>
 </html>
