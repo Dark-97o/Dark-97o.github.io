@@ -1,0 +1,79 @@
+<!-- Test HTML File - Save as test.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Chat Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #messages { height: 300px; border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; overflow-y: auto; }
+        #message-form { display: flex; }
+        #message-input { flex: 1; padding: 8px; }
+        button { padding: 8px 16px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>Simple Firebase Chat Test</h2>
+    <div id="messages"></div>
+    <form id="message-form">
+        <input type="text" id="message-input" placeholder="Type a message...">
+        <button type="submit">Send</button>
+    </form>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
+    <script>
+        // TODO: Replace with your actual Firebase config
+        const firebaseConfig = {
+        apiKey: "AIzaSyCTazgFzPrcfnHexhBBGZ4B0nns1RqLk-w",
+        authDomain: "shadows-c6e75.firebaseapp.com",
+        projectId: "shadows-c6e75",
+        storageBucket: "shadows-c6e75.firebasestorage.app",
+        messagingSenderId: "529425484235",
+        appId: "1:529425484235:web:2fb21a26b50c2e8c1d0e4e",
+        measurementId: "G-XN630031Q4"
+    };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        
+        // Get references
+        const messagesDiv = document.getElementById('messages');
+        const messageForm = document.getElementById('message-form');
+        const messageInput = document.getElementById('message-input');
+        
+        // Database reference
+        const messagesRef = firebase.database().ref('test-messages');
+        
+        // Submit form
+        messageForm.addEventListener('submit', e => {
+            e.preventDefault();
+            
+            const text = messageInput.value.trim();
+            if (!text) return;
+            
+            // Add message to database
+            messagesRef.push({
+                text: text,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            });
+            
+            messageInput.value = '';
+        });
+        
+        // Listen for new messages
+        messagesRef.on('child_added', snapshot => {
+            const message = snapshot.val();
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message.text;
+            messagesDiv.appendChild(messageElement);
+            
+            // Scroll to bottom
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        });
+    </script>
+</body>
+</html>
