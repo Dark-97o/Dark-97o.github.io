@@ -1141,6 +1141,32 @@
         </div>
     </section>
 
+<!-- Fade Line Separator HTML -->
+<div class="fade-separator">
+    <div class="circuit-nodes">
+        <span class="node"></span>
+        <span class="node"></span>
+        <span class="node"></span>
+        <span class="node"></span>
+        <span class="node"></span>
+    </div>
+</div>
+
+<!-- CSS for the Enhanced Fade Line Separator -->
+<style>
+.fade-separator {
+    position: relative;
+    height: 2px;
+    width: 100%;
+    margin: 60px 0;
+    background: linear-gradient(90deg, 
+        rgba(0, 0, 0, 0), 
+        rgba(0, 238, 255, 0.7), 
+        rgba(0, 0, 0, 0));
+    overflow: visible;
+    animation: separator-pulsate 4s infinite ease-in-out;
+}
+
     /* Main line glowing effect */
 .fade-separator::before {
     content: '';
