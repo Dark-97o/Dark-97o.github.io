@@ -825,7 +825,7 @@
 
 <!-- Add this CSS to your style section -->
 <style>
-    .top-buyer-banner {
+     .top-buyer-banner {
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 20, 20, 0.9), rgba(0, 0, 0, 0.8));
         border-top: 1px solid var(--primary-color);
         border-bottom: 1px solid var(--primary-color);
@@ -842,7 +842,8 @@
         white-space: nowrap;
         display: inline-block;
         padding: 8px 0;
-        animation: scrollText 15s linear infinite; /* Speed doubled */
+        animation: scrollText 15s linear infinite;
+        font-size: 13px;
     }
 
     .top-buyer-label {
@@ -856,21 +857,37 @@
         color: white;
         font-weight: 600;
         margin-right: 10px;
-        letter-spacing: 1px;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        letter-spacing: 0.5px;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
     }
 
     .top-buyer-stats {
         color: rgba(255, 255, 255, 0.9);
         font-style: italic;
         font-weight: 500;
-        text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
-        margin-right: 30px;
+        text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        margin-right: 20px;
     }
 
     @keyframes scrollText {
         0% { transform: translateX(100%); }
         100% { transform: translateX(-100%); }
+    }
+
+    /* Responsive adjustments for mobile */
+    @media screen and (max-width: 768px) {
+        .top-buyer-banner {
+            top: 95px;
+        }
+
+        .top-buyer-content {
+            font-size: 7px;
+            padding: 4px 0;
+        }
+
+        .top-buyer-stats {
+            margin-right: 15px;
+        }
     }
 </style>
 
@@ -906,30 +923,8 @@
             </div>
         </div>
     </header>
-<br><br><br>
-    <!-- Top Buyer Banner -->
-    <div class="top-buyer-banner">
-        <div class="top-buyer-content">
-            <span class="top-buyer-label">🏆 TOP BUYER THIS MONTH:</span>
-            <span class="top-buyer-name">MAUSIKTA KHETO</span>
-            <span class="top-buyer-stats">• 1 PURCHASES • 50₹ SPENT •</span>
-            <span class="top-buyer-label">🔥 PREMIUM MEMBER </span>
-            <span class="top-buyer-name">MAUSIKTA KHETO</span>
-            <span class="top-buyer-stats">• VIP ACCESS • PRIORITY ORDERS •</span>
-        </div>
-    </div>
 
-    <!-- Hero Section for Internships -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Internship Opportunities</h1>
-            <p class="hero-subtitle">Discover exclusive internship positions sourced by our network for UEM students</p>
-            <div>
-                <a href="#available-internships" class="btn">Browse Internships</a>
-        </div>
-        </div>
-    </section>
-
+<br><br><br><br><br>
     <!-- Internship Categories Section -->
     <section id="internship-categories">
         <div class="container">
@@ -1275,86 +1270,6 @@
     </section>
 
 
-    <!-- Success Stories Section -->
-    <section id="success-stories">
-        <div class="container">
-            <h2 class="section-title">Success Stories</h2>
-            <p class="section-subtitle">See how our network helped these students land their dream internships</p>
-            
-            <div class="testimonials-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; margin-top: 40px;">
-                <!-- Testimonial 1 -->
-                <div class="testimonial-card" style="background: var(--light-color); border-radius: 10px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-                    <div style="width: 80px; height: 80px; border-radius: 50%; background: #f0f0f0; margin: 0 auto 20px; overflow: hidden;">
-                        <img src="/api/placeholder/80/80" alt="Student testimonial" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <h4 style="text-align: center; margin-bottom: 10px;">Rohit Sharma</h4>
-                    <p style="text-align: center; color: var(--accent-color); font-size: 0.9rem; margin-bottom: 15px;">Software Engineering Intern at Microsoft</p>
-                    <p style="text-align: center; font-style: italic;">"The referral I received through this network was a game-changer. I went from being just another applicant to getting a direct interview with the hiring manager."</p>
-                </div>
-                
-                <!-- Testimonial 2 -->
-                <div class="testimonial-card" style="background: var(--light-color); border-radius: 10px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-                    <div style="width: 80px; height: 80px; border-radius: 50%; background: #f0f0f0; margin: 0 auto 20px; overflow: hidden;">
-                        <img src="/api/placeholder/80/80" alt="Student testimonial" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <h4 style="text-align: center; margin-bottom: 10px;">Priya Patel</h4>
-                    <p style="text-align: center; color: var(--accent-color); font-size: 0.9rem; margin-bottom: 15px;">UI/UX Design Intern at Flipkart</p>
-                    <p style="text-align: center; font-style: italic;">"I was struggling to even get a response from companies. With the referral from this network, I landed an internship at my dream company within two weeks!"</p>
-                </div>
-                
-                <!-- Testimonial 3 -->
-                <div class="testimonial-card" style="background: var(--light-color); border-radius: 10px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-                    <div style="width: 80px; height: 80px; border-radius: 50%; background: #f0f0f0; margin: 0 auto 20px; overflow: hidden;">
-                        <img src="/api/placeholder/80/80" alt="Student testimonial" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <h4 style="text-align: center; margin-bottom: 10px;">Amit Kumar</h4>
-                    <p style="text-align: center; color: var(--accent-color); font-size: 0.9rem; margin-bottom: 15px;">Data Science Intern at Amazon</p>
-                    <p style="text-align: center; font-style: italic;">"The guidance I received before my interview was invaluable. My mentor knew exactly what the company was looking for and helped me prepare accordingly."</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section id="faq">
-        <div class="container">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            <p class="section-subtitle">Everything you need to know about our internship referral service</p>
-            
-            <div class="faq-container" style="max-width: 800px; margin: 40px auto 0;">
-                <!-- FAQ Item 1 -->
-                <div class="faq-item" style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
-                    <h3 style="margin-bottom: 10px; color: var(--primary-color);">Is this service free for UEM students?</h3>
-                    <p>Yes, this service is completely free for all currently enrolled UEM students. We believe in helping our fellow students succeed without any financial barriers.</p>
-                </div>
-                
-                <!-- FAQ Item 2 -->
-                <div class="faq-item" style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
-                    <h3 style="margin-bottom: 10px; color: var(--primary-color);">How soon will I hear back after submitting my request?</h3>
-                    <p>We typically respond within 48-72 hours. For high-demand or urgent opportunities with close deadlines, we prioritize those requests and may respond sooner.</p>
-                </div>
-                
-                <!-- FAQ Item 3 -->
-                <div class="faq-item" style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
-                    <h3 style="margin-bottom: 10px; color: var(--primary-color);">Can I request referrals for companies not listed on your website?</h3>
-                    <p>Absolutely! We have an extensive network across various industries. If you have a specific company in mind that's not listed, please mention it in your request form, and we'll do our best to find a connection.</p>
-                </div>
-                
-                <!-- FAQ Item 4 -->
-                <div class="faq-item" style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
-                    <h3 style="margin-bottom: 10px; color: var(--primary-color);">What should I do to maximize my chances of getting referred?</h3>
-                    <p>Make sure your resume is updated and tailored to the position, provide a comprehensive list of your skills, and clearly explain why you're interested in the role. The more information you provide, the better we can match you with the right connection.</p>
-                </div>
-                
-                <!-- FAQ Item 5 -->
-                <div class="faq-item">
-                    <h3 style="margin-bottom: 10px; color: var(--primary-color);">Do you guarantee internship placements?</h3>
-                    <p>While we can't guarantee placements, our referrals significantly increase your chances of getting an interview. Our network has a 70% success rate in helping students secure at least an initial interview.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-          
     <!-- Footer -->
     <footer>
         <div class="container">

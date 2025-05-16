@@ -855,7 +855,7 @@
 
 <!-- Add this CSS to your style section -->
 <style>
-    .top-buyer-banner {
+     .top-buyer-banner {
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 20, 20, 0.9), rgba(0, 0, 0, 0.8));
         border-top: 1px solid var(--primary-color);
         border-bottom: 1px solid var(--primary-color);
@@ -872,7 +872,8 @@
         white-space: nowrap;
         display: inline-block;
         padding: 8px 0;
-        animation: scrollText 15s linear infinite; /* Speed doubled */
+        animation: scrollText 15s linear infinite;
+        font-size: 13px;
     }
 
     .top-buyer-label {
@@ -886,21 +887,37 @@
         color: white;
         font-weight: 600;
         margin-right: 10px;
-        letter-spacing: 1px;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        letter-spacing: 0.5px;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
     }
 
     .top-buyer-stats {
         color: rgba(255, 255, 255, 0.9);
         font-style: italic;
         font-weight: 500;
-        text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
-        margin-right: 30px;
+        text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        margin-right: 20px;
     }
 
     @keyframes scrollText {
         0% { transform: translateX(100%); }
         100% { transform: translateX(-100%); }
+    }
+
+    /* Responsive adjustments for mobile */
+    @media screen and (max-width: 768px) {
+        .top-buyer-banner {
+            top: 95px;
+        }
+
+        .top-buyer-content {
+            font-size: 7px;
+            padding: 4px 0;
+        }
+
+        .top-buyer-stats {
+            margin-right: 15px;
+        }
     }
 </style>
 
