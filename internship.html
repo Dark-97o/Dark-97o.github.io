@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://lh3.googleusercontent.com/pw/AP1GczPEyErGJ4vjrf7gb5324t1c65OwcS4IkrqBdCrKP1u7nRD2q9_RCLBHQaVjmZ3l50DmY6gIfEA3lGGPvLDDBQDmHb1Xi_WdEgkja5O3khKlFjxVBz29WB2_rysGQ_j-MWtB1tDHqDFNb-K1QFcSOtum=w725-h725-s-no-gm?authuser=3" type="image/png">
+    <title>USM Internships</title>
+    <link rel="stylesheet" href="internships.css">
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background">
+        <div class="grid"></div>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczOdFAS_JGWotWMJF4LNK3HIwy3BcYLYGkNs1OSnJTQqi5SH3Fu6JGCF4Ih3fnm08lByT7qPAPybLPTF7TzuDgTi5otMigrX6YP_1Dq1kaEySEmjHGScigLMYd7pYLUO_4jZjUly57Mimx5IYDtLF4BK=w500-h500-s-no-gm?authuser=3" alt="UEM Shadow Market Logo">
+                <div class="logo-text">USM</div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="https://dark-97o.github.io/index.html">Home</a></li>
+                    <li><a href="https://dark-97o.github.io/news.html">News</a></li>
+                    <li><a href="https://dark-97o.github.io/service.html">Services</a></li>
+                    <li><a href="https://dark-97o.github.io/project.html">Projects</a></li>
+                    <li><a href="https://dark-97o.github.io/question.html">Question Bank</a></li>
+                    <li><a href="internships.html" class="active">Internships</a></li>
+                    <li><a href="#join-team">Join Team</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Buyer Banner -->
+    <div class="top-buyer-banner">
+        <div class="top-buyer-content">
+            <span class="top-buyer-label">🚀 HOT INTERNSHIPS:</span>
+            <span class="top-buyer-name">MICROSOFT</span>
+            <span class="top-buyer-stats">• SOFTWARE ENGINEERING • ₹50,000/MONTH •</span>
+            <span class="top-buyer-label">🔥 DEADLINE APPROACHING: </span>
+            <span class="top-buyer-name">AMAZON</span>
+            <span class="top-buyer-stats">• CLOUD SERVICES • APPLY BY MAY 25 •</span>
+            <span class="top-buyer-label">💼 JUST ADDED: </span>
+            <span class="top-buyer-name">INFOSYS</span>
+            <span class="top-buyer-stats">• AI RESEARCH • REMOTE OPTION •</span>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Exclusive Internship Opportunities</h1>
+            <p class="hero-subtitle">Discover handpicked internships for UEM students with exclusive access through USM</p>
+            <div class="hero-actions">
+                <a href="#internships" class="btn">Browse Internships</a>
+                <a href="#premium" class="btn btn-secondary">Premium Access</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Internship Filters -->
+    <section class="filters" id="filters">
+        <div class="container">
+            <h2 class="section-title">Find Your Ideal Internship</h2>
+            <div class="filters-container">
+                <div class="filter-group">
+                    <label for="department">Department</label>
+                    <select id="department" class="filter-select">
+                        <option value="all">All Departments</option>
+                        <option value="cse">Computer Science</option>
+                        <option value="ece">Electronics & Communication</option>
+                        <option value="mech">Mechanical Engineering</option>
+                        <option value="civil">Civil Engineering</option>
+                        <option value="biotech">Biotechnology</option>
+                        <option value="management">Management</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="duration">Duration</label>
+                    <select id="duration" class="filter-select">
+                        <option value="all">Any Duration</option>
+                        <option value="1-month">1 Month</option>
+                        <option value="2-month">2 Months</option>
+                        <option value="3-month">3 Months</option>
+                        <option value="6-month">6 Months</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="stipend">Stipend Range</label>
+                    <select id="stipend" class="filter-select">
+                        <option value="all">Any Amount</option>
+                        <option value="unpaid">Unpaid</option>
+                        <option value="5000-10000">₹5,000 - ₹10,000</option>
+                        <option value="10000-20000">₹10,000 - ₹20,000</option>
+                        <option value="20000-plus">₹20,000+</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="location">Location</label>
+                    <select id="location" class="filter-select">
+                        <option value="all">All Locations</option>
+                        <option value="remote">Remote</option>
+                        <option value="jaipur">Jaipur</option>
+                        <option value="delhi">Delhi</option>
+                        <option value="bangalore">Bangalore</option>
+                        <option value="mumbai">Mumbai</option>
+                        <option value="hyderabad">Hyderabad</option>
+                    </select>
+                </div>
+                <button id="apply-filters" class="btn filter-btn">Apply Filters</button>
+                <button id="reset-filters" class="btn btn-secondary filter-btn">Reset</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Internships Section -->
+    <section class="internships" id="internships">
+        <div class="container">
+            <h2 class="section-title">Available Internships</h2>
+            <p class="section-subtitle">Exclusive opportunities for UEM students</p>
+            
+            <div class="internships-container" id="internships-container">
+                <!-- Internship cards will be dynamically loaded here -->
+            </div>
+            
+            <div class="pagination">
+                <button id="load-more" class="btn">Load More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Access Section -->
+    <section class="premium" id="premium">
+        <div class="container">
+            <h2 class="section-title">Premium Internship Access</h2>
+            <div class="premium-container">
+                <div class="premium-card">
+                    <div class="premium-header">
+                        <h3>Basic Access</h3>
+                        <div class="premium-price">Free</div>
+                    </div>
+                    <div class="premium-features">
+                        <ul>
+                            <li>View public internship listings</li>
+                            <li>Basic application support</li>
+                            <li>Standard response time</li>
+                            <li class="not-included">Interview preparation</li>
+                            <li class="not-included">Exclusive internships</li>
+                            <li class="not-included">Priority application</li>
+                        </ul>
+                    </div>
+                    <div class="premium-action">
+                        <a href="#" class="btn btn-secondary">Current Plan</a>
+                    </div>
+                </div>
+                
+                <div class="premium-card highlighted">
+                    <div class="premium-badge">Recommended</div>
+                    <div class="premium-header">
+                        <h3>Premium Access</h3>
+                        <div class="premium-price">₹999<span>/semester</span></div>
+                    </div>
+                    <div class="premium-features">
+                        <ul>
+                            <li>All basic features</li>
+                            <li>Access to exclusive internships</li>
+                            <li>Priority application process</li>
+                            <li>Resume & cover letter review</li>
+                            <li>Basic interview preparation</li>
+                            <li class="not-included">Direct referrals</li>
+                        </ul>
+                    </div>
+                    <div class="premium-action">
+                        <a href="#" class="btn">Upgrade Now</a>
+                    </div>
+                </div>
+                
+                <div class="premium-card">
+                    <div class="premium-header">
+                        <h3>Elite Access</h3>
+                        <div class="premium-price">₹2499<span>/semester</span></div>
+                    </div>
+                    <div class="premium-features">
+                        <ul>
+                            <li>All premium features</li>
+                            <li>Direct referrals to companies</li>
+                            <li>Guaranteed internship placement</li>
+                            <li>Advanced interview coaching</li>
+                            <li>24/7 priority support</li>
+                            <li>Exclusive networking events</li>
+                        </ul>
+                    </div>
+                    <div class="premium-action">
+                        <a href="#" class="btn btn-secondary">Upgrade Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories Section -->
+    <section class="success-stories">
+        <div class="container">
+            <h2 class="section-title">Success Stories</h2>
+            <p class="section-subtitle">Students who secured internships through USM</p>
+            
+            <div class="testimonials">
+                <div class="testimonial">
+                    <div class="testimonial-img">
+                        <img src="/api/placeholder/150/150" alt="Student portrait">
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"USM helped me secure a dream internship at Google. The premium access was worth every rupee and gave me an edge over other applicants."</p>
+                        <div class="testimonial-author">
+                            <h4>Akshay Patel</h4>
+                            <p>B.Tech CSE, 4th Year</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-img">
+                        <img src="/api/placeholder/150/150" alt="Student portrait">
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"I was struggling to find the right opportunity until I discovered USM. Their exclusive listings and application support made all the difference."</p>
+                        <div class="testimonial-author">
+                            <h4>Neha Sharma</h4>
+                            <p>B.Tech ECE, 3rd Year</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-img">
+                        <img src="/api/placeholder/150/150" alt="Student portrait">
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"The Elite Access package got me a direct referral to Amazon. The interview coaching helped me convert the opportunity into a pre-placement offer!"</p>
+                        <div class="testimonial-author">
+                            <h4>Rahul Verma</h4>
+                            <p>B.Tech Mechanical, 4th Year</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Team Section -->
+    <section id="join-team" class="join-team">
+        <div class="container">
+            <h2 class="section-title">Join Our Team</h2>
+            <p class="section-subtitle" style="color: white; opacity: 0.9;">Become part of our growing network of talented students</p>
+            
+            <div style="max-width: 700px; margin: 0 auto; background: rgba(0, 0, 0, 0.7); padding: 30px; border-radius: 10px;">
+                <p style="margin-bottom: 20px;">We're looking for talented students who can contribute to our community. If you excel in:</p>
+                <ul style="list-style-type: none; margin-bottom: 30px; text-align: left; display: inline-block;">
+                    <li style="margin-bottom: 10px;">✓ Project development (hardware/software)</li>
+                    <li style="margin-bottom: 10px;">✓ Content writing and documentation</li>
+                    <li style="margin-bottom: 10px;">✓ Graphic design and presentation making</li>
+                    <li style="margin-bottom: 10px;">✓ Marketing and campus outreach</li>
+                    <li style="margin-bottom: 10px;">✓ Internship coordination and company relations</li>
+                </ul>
+                
+                <p style="margin-bottom: 30px;">Join our team to earn while you learn and build valuable skills for your future career.</p>
+                
+                <a href="https://forms.google.com/join-team" class="btn" style="background: var(--accent-color); padding: 15px 40px; font-size: 1.1rem; color:#ffffff">Apply Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczOdFAS_JGWotWMJF4LNK3HIwy3BcYLYGkNs1OSnJTQqi5SH3Fu6JGCF4Ih3fnm08lByT7qPAPybLPTF7TzuDgTi5otMigrX6YP_1Dq1kaEySEmjHGScigLMYd7pYLUO_4jZjUly57Mimx5IYDtLF4BK=w500-h500-s-no-gm?authuser=3" alt="UEM Shadow Market Logo">
+                        <div class="logo-text">UEM Shadow Market</div>
+                    </div>
+                    <p style="margin-top: 20px; opacity: 0.7;">Your anonymous support system for academic success at UEM Jaipur. We're here to help you excel in your academic journey.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="https://dark-97o.github.io/index.html">Home</a></li>
+                        <li><a href="https://dark-97o.github.io/news.html">News</a></li>
+                        <li><a href="https://dark-97o.github.io/service.html">Services</a></li>
+                        <li><a href="https://dark-97o.github.io/project.html">Projects</a></li>
+                        <li><a href="https://dark-97o.github.io/question.html">Question Bank</a></li>
+                        <li><a href="internships.html">Internships</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#join-team">Join Team</a></li>
+                        <li><a href="https://t.me/uemshadowmarket">Telegram Channel</a></li>
+                        <li><a href="https://wa.me/1234567890">WhatsApp</a></li>
+                        <li><a href="mailto:contact@uemshadowmarket.com">Email Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 UEM Shadow Market. All rights reserved. Not affiliated with UEM Jaipur.</p>
+                <p style="margin-top: 10px; font-size: 0.8rem;">Disclaimer: This website is intended for educational purposes only.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="internships.js"></script>
+</body>
+</html>

@@ -841,6 +841,69 @@
         </div>
     </header>
     <br><br><br>
+        <!-- Add this code right after the header section in your HTML -->
+<div class="top-buyer-banner">
+    <div class="top-buyer-content">
+        <span class="top-buyer-label">🏆 TOP BUYER THIS MONTH:</span>
+        <span class="top-buyer-name">MAUSIKTA KHETO</span>
+        <span class="top-buyer-stats">• 1 PURCHASES • 50₹ SPENT •</span>
+        <span class="top-buyer-label">🔥 PREMIUM MEMBER </span>
+        <span class="top-buyer-name">MAUSIKTA KHETO</span>
+        <span class="top-buyer-stats">• VIP ACCESS • PRIORITY ORDERS •</span>
+    </div>
+</div>
+
+<!-- Add this CSS to your style section -->
+<style>
+    .top-buyer-banner {
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 20, 20, 0.9), rgba(0, 0, 0, 0.8));
+        border-top: 1px solid var(--primary-color);
+        border-bottom: 1px solid var(--primary-color);
+        overflow: hidden;
+        position: fixed;
+        top: 100px;
+        left: 0;
+        width: 100%;
+        z-index: 99;
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    }
+
+    .top-buyer-content {
+        white-space: nowrap;
+        display: inline-block;
+        padding: 8px 0;
+        animation: scrollText 15s linear infinite; /* Speed doubled */
+    }
+
+    .top-buyer-label {
+        color: var(--primary-color);
+        font-weight: 700;
+        margin: 0 15px;
+        text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
+    }
+
+    .top-buyer-name {
+        color: white;
+        font-weight: 600;
+        margin-right: 10px;
+        letter-spacing: 1px;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    }
+
+    .top-buyer-stats {
+        color: rgba(255, 255, 255, 0.9);
+        font-style: italic;
+        font-weight: 500;
+        text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+        margin-right: 30px;
+    }
+
+    @keyframes scrollText {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+</style>
+
     
     <!-- Services Section -->
     <section id="services">
