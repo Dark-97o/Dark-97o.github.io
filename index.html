@@ -841,14 +841,14 @@
         </div>
     </header>
         <br><br><br>
-    <!-- Add this code right after the header section in your HTML -->
+<!-- Add this code right after the header section in your HTML -->
 <div class="top-buyer-banner">
     <div class="top-buyer-content">
         <span class="top-buyer-label">🏆 TOP BUYER THIS MONTH:</span>
-        <span class="top-buyer-name">MAUSIKTA KHETO</span>
-        <span class="top-buyer-stats">• 1 PURCHASES • 50₹ SPENT •</span>
+        <span class="top-buyer-name">RAHUL SHARMA</span>
+        <span class="top-buyer-stats">• 15 PURCHASES • 25,000₹ SPENT •</span>
         <span class="top-buyer-label">🔥 PREMIUM MEMBER </span>
-        <span class="top-buyer-name">MAUSIKTA KHETO</span>
+        <span class="top-buyer-name">ANANYA PATEL</span>
         <span class="top-buyer-stats">• VIP ACCESS • PRIORITY ORDERS •</span>
     </div>
 </div>
@@ -872,7 +872,8 @@
         white-space: nowrap;
         display: inline-block;
         padding: 8px 0;
-        animation: scrollText 15s linear infinite; /* Speed doubled */
+        animation: scrollText 15s linear infinite;
+        font-size: 16px;
     }
 
     .top-buyer-label {
@@ -902,8 +903,23 @@
         0% { transform: translateX(100%); }
         100% { transform: translateX(-100%); }
     }
-</style>
 
+    /* Responsive adjustments for mobile */
+    @media screen and (max-width: 768px) {
+        .top-buyer-banner {
+            top: 80px;
+        }
+
+        .top-buyer-content {
+            font-size: 14px;
+            padding: 6px 0;
+        }
+
+        .top-buyer-stats {
+            margin-right: 20px;
+        }
+    }
+</style>
    <!-- Hero Section -->
 <section class="hero" id="home">
     <div class="hero-content">
