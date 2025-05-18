@@ -1282,8 +1282,6 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script>
-
-// Replace the entire script section with this:
     document.addEventListener('DOMContentLoaded', function() {
         // DOM Elements
         const vipAuth = document.getElementById('vip-auth');
@@ -1299,7 +1297,7 @@
         const onlineCount = document.getElementById('online-count');
         
         // VIP Keys (in a real application, these would be stored securely on a server)
-        const validVipKeys = ['UEMVIP'];
+        const validVipKeys = ['RFY1RC6X9TBU31IO'];
         
         // Chat Variables
         let username = '';
@@ -1372,8 +1370,8 @@
             // Remove user when they disconnect
             userRef.onDisconnect().remove();
             
-            // Listen for messages
-            loadChatHistory();
+            // Load only the last 5 messages
+            loadLatest5Messages();
             
             // Listen for online users changes
             trackOnlineUsers();
@@ -1392,6 +1390,9 @@
                 timestamp: firebase.database.ServerValue.TIMESTAMP,
                 time: timeString
             });
+            
+            // Listen for new messages after joining
+            listenForNewMessages();
         }
         
         // Show Error Message
@@ -1436,7 +1437,38 @@
             }
             
             chatMessages.appendChild(messageElement);
+            
+            // Keep only the last 5 messages
+            maintainMessageLimit();
+            
             scrollToBottom();
+        }
+        
+        // Maintain the message limit (5 messages)
+        function maintainMessageLimit() {
+            const allMessages = chatMessages.querySelectorAll('.chat-message, .system-message');
+            const welcomeDiv = chatMessages.querySelector('.chat-welcome');
+            
+            // Count total messages excluding welcome div
+            const totalMessages = allMessages.length;
+            
+            // If we have more than 5 messages, remove the oldest ones
+            if (totalMessages > 5) {
+                // Calculate how many to remove
+                const removeCount = totalMessages - 5;
+                
+                // Remove oldest messages (after welcome div if it exists)
+                for (let i = 0; i < removeCount; i++) {
+                    // Skip the welcome div if it's the first child
+                    if (welcomeDiv && welcomeDiv === allMessages[i]) {
+                        continue;
+                    }
+                    
+                    if (allMessages[i] && allMessages[i].parentNode) {
+                        allMessages[i].parentNode.removeChild(allMessages[i]);
+                    }
+                }
+            }
         }
         
         // Add System Message (local only)
@@ -1445,6 +1477,10 @@
             messageElement.className = 'system-message';
             messageElement.textContent = content;
             chatMessages.appendChild(messageElement);
+            
+            // Keep only the last 5 messages
+            maintainMessageLimit();
+            
             scrollToBottom();
         }
         
@@ -1479,19 +1515,36 @@
             chatInput.value = '';
         }
         
-        // Load Chat History from Firebase
-        function loadChatHistory() {
+        // Load Only Last 5 Messages
+        function loadLatest5Messages() {
             // Clear existing messages
             chatMessages.innerHTML = '';
             
             // Add welcome message
             const welcomeDiv = document.createElement('div');
             welcomeDiv.className = 'chat-welcome';
-            welcomeDiv.innerHTML = '<h3>Welcome to the VIP Chat Lounge</h3><p>This is the start of the conversation. Be respectful to other members.</p>';
+            welcomeDiv.innerHTML = '<h3>Welcome to the VIP Chat Lounge</h3><p>This is a live chat. Only the last 5 messages are shown.</p>';
             chatMessages.appendChild(welcomeDiv);
             
-            // Get the last 20 messages
-            messagesRef.orderByChild('timestamp').limitToLast(20).on('child_added', snapshot => {
+            // Get only the last 5 messages
+            messagesRef.orderByChild('timestamp').limitToLast(5).once('value', snapshot => {
+                const messages = snapshot.val() || {};
+                
+                // Convert to array and sort by timestamp
+                const messageArray = Object.keys(messages).map(key => messages[key])
+                    .sort((a, b) => a.timestamp - b.timestamp);
+                
+                // Add messages to chat
+                messageArray.forEach(message => {
+                    addMessage(message);
+                });
+            });
+        }
+        
+        // Listen for new messages after initial load
+        function listenForNewMessages() {
+            // Listen for new messages added after we join
+            messagesRef.orderByChild('timestamp').startAfter(Date.now()).on('child_added', snapshot => {
                 const message = snapshot.val();
                 addMessage(message);
             });
@@ -1527,7 +1580,7 @@
             }, 500);
             
             // Clear and reload chat
-            loadChatHistory();
+            loadLatest5Messages();
             
             addSystemMessage('Chat refreshed');
         });
