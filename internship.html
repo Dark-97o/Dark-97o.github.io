@@ -900,29 +900,117 @@
     
     <!-- Header -->
     <header>
-        <div class="container header-content">
-            <div class="logo">
-                <img src="https://lh3.googleusercontent.com/pw/AP1GczOdFAS_JGWotWMJF4LNK3HIwy3BcYLYGkNs1OSnJTQqi5SH3Fu6JGCF4Ih3fnm08lByT7qPAPybLPTF7TzuDgTi5otMigrX6YP_1Dq1kaEySEmjHGScigLMYd7pYLUO_4jZjUly57Mimx5IYDtLF4BK=w500-h500-s-no-gm?authuser=3" alt="UEM Shadow Market Logo">
-                <div class="logo-text">USM</div>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="https://dark-97o.github.io/index.html">Home</a></li>
-                    <li><a href="https://dark-97o.github.io/news.html">News</a></li>
-                    <li><a href="https://dark-97o.github.io/service.html">Services</a></li>
-                    <li><a href="https://dark-97o.github.io/project.html">Projects</a></li>
-                    <li><a href="https://dark-97o.github.io/question.html">Question Bank</a></li>
-                    <li><a href="#available-internships" class="active">Internships</a></li>
-                    <li><a href="https://dark-97o.github.io/join.html">Join Team</a></li>
-                </ul>
-            </nav>
-            <div class="mobile-menu">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
-            </div>
+    <div class="container header-content">
+        <div class="logo">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczOdFAS_JGWotWMJF4LNK3HIwy3BcYLYGkNs1OSnJTQqi5SH3Fu6JGCF4Ih3fnm08lByT7qPAPybLPTF7TzuDgTi5otMigrX6YP_1Dq1kaEySEmjHGScigLMYd7pYLUO_4jZjUly57Mimx5IYDtLF4BK=w500-h500-s-no-gm?authuser=3" alt="UEM Shadow Market Logo">
+            <div class="logo-text">USM</div>
         </div>
-    </header>
+        <nav class="right-aligned-nav">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li class="nav-separator">|</li>
+                <li><a href="https://dark-97o.github.io/news.html">News</a></li>
+                <li class="nav-separator">|</li>
+                <li><a href="https://dark-97o.github.io/service.html">Services</a></li>
+                <li class="nav-separator">|</li>
+                <li><a href="https://dark-97o.github.io/project.html">Projects</a></li>
+                <li class="nav-separator">|</li>
+                <li><a href="https://dark-97o.github.io/question.html">Question Bank</a></li>
+                <li class="nav-separator">|</li>
+                <li><a href="https://dark-97o.github.io/internship.html">Internships</a></li>
+                <li class="nav-separator">|</li>
+                <li><a href="https://dark-97o.github.io/join.html">Join Team</a></li>
+                <li class="nav-separator">|</li>
+                <li><a href="https://dark-97o.github.io/vip.html" class="vip-button">VIP</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-menu">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </div>
+</header>
+
+<style>
+    /* VIP Button Animation & Style */
+    .vip-button {
+        background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+        background-size: 200% 100%;
+        color: #000 !important;
+        font-weight: bold;
+        padding: 8px 15px;
+        border-radius: 20px;
+        text-shadow: none;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        animation: vipGradient 3s infinite, vipPulse 2s infinite;
+    }
+
+    @keyframes vipGradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    @keyframes vipPulse {
+        0% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+        50% { box-shadow: 0 0 20px rgba(255, 0, 255, 0.8); }
+        100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+    }
+
+    .vip-button:hover {
+        transform: scale(1.1);
+        animation: vipGradient 1s infinite, vipPulse 1s infinite;
+    }
+
+    .vip-button:after {
+        display: none; /* Remove the underline effect that other nav items have */
+    }
+
+    /* Navigation Separator Style */
+    .nav-separator {
+        color: var(--primary-color);
+        opacity: 0.5;
+        margin: 0 5px;
+    }
+
+    /* Adjust spacing for nav items with separators */
+    nav ul li {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    /* Right-aligned navigation */
+    .right-aligned-nav {
+        margin-left: auto;
+    }
+
+    .right-aligned-nav ul {
+        justify-content: flex-end;
+    }
+
+    /* Mobile responsive adjustments */
+    @media screen and (max-width: 768px) {
+        .nav-separator {
+            display: none; /* Hide separators on mobile */
+        }
+        
+        nav ul li {
+            margin: 15px 0;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .vip-button {
+            display: inline-block;
+            width: 120px;
+        }
+        
+        .right-aligned-nav ul {
+            justify-content: center; /* Center align on mobile */
+        }
+    }
+</style>
 
 <br><br><br><br><br>
     <!-- Internship Categories Section -->
