@@ -1010,7 +1010,8 @@
 </style>
   <br><br><br>
     <br><br>
-<!-- Join Team Section with Firebase Integration -->
+
+ <!-- Join Team Section with Firebase Integration -->
 <section id="join-team" class="join-team">
     <div class="container">
         <h2 class="section-title">Join Our Team</h2>
@@ -1110,12 +1111,13 @@
             // Firebase configuration - Replace with your own Firebase project config
             const firebaseConfig = {
                 apiKey: "AIzaSyAE2y_J9WdvfovUTALtlvLtzTwadMverAI",
-                authDomain: "studentdets.firebaseapp.com",
-                databaseURL: "https://studentdets.firebaseio.com",
-                projectId: "studentdets",
-                storageBucket: "studentdets.firebasestorage.app",
-                messagingSenderId: "586916761945",
-                appId: "1:586916761945:web:fa37ced2f6b7d7497f3c48",
+                    authDomain: "studentdets.firebaseapp.com",
+                    databaseURL: "https://studentdets-default-rtdb.asia-southeast1.firebasedatabase.app",
+                    projectId: "studentdets",
+                    storageBucket: "studentdets.firebasestorage.app",
+                    messagingSenderId: "586916761945",
+                    appId: "1:586916761945:web:fa37ced2f6b7d7497f3c48",
+                    measurementId: "G-D674RGM9QX"
             };
             
             // Initialize Firebase
@@ -1126,34 +1128,25 @@
             
             // Get form element
             const form = document.getElementById('joinTeamForm');
+            const confirmationModal = document.getElementById('confirmationModal');
             
-            // Form submission handler with direct onclick
-            form.onsubmit = function(event) {
+            // Form submit handler
+            form.addEventListener('submit', function(event) {
                 event.preventDefault();
-                submitForm();
-                return false;
-            };
-            
-            // Also add a direct click handler to the button (as backup)
-            document.querySelector('#joinTeamForm button[type="submit"]').onclick = function(event) {
-                event.preventDefault();
-                submitForm();
-                return false;
-            };
-            
-            function submitForm() {
+                console.log("Form submitted");
+                
                 // Form validation
                 if (!form.checkValidity()) {
                     // Trigger browser's native validation
                     form.reportValidity();
-                    return;
+                    return false;
                 }
                 
                 // Check if at least one interest is selected
                 const interestCheckboxes = document.querySelectorAll('input[name="interests"]:checked');
                 if (interestCheckboxes.length === 0) {
                     alert("Please select at least one area of interest");
-                    return;
+                    return false;
                 }
                 
                 // Collect form data
@@ -1181,41 +1174,46 @@
                 console.log("Attempting to save application:", application);
                 
                 try {
-                    // Save to Firebase
+                    // Save to Firebase - Only show confirmation after successful save
                     const newApplicationRef = database.ref('applications').push();
                     newApplicationRef.set(application)
                         .then(() => {
-                            console.log("Application saved successfully");
-                            // Show confirmation modal
-                            document.getElementById('confirmationModal').style.display = 'flex';
+                            // Success handling
+                            console.log("Application saved successfully to Firebase");
+                            
+                            // Show confirmation modal ONLY after successful Firebase push
+                            confirmationModal.style.display = 'flex';
+                            
                             // Reset form
                             form.reset();
                         })
                         .catch((error) => {
-                            console.error("Error saving application: ", error);
-                            alert("There was an error submitting your application. Please try again later.");
+                            // Error handling
+                            console.error("Firebase Error:", error);
+                            alert("There was an error submitting your application to our database. Please try again later.");
                         });
                 } catch (e) {
-                    console.error("Exception during Firebase operation:", e);
+                    console.error("Exception during operation:", e);
                     alert("There was an error processing your application. Please try again later.");
                 }
-            }
+                
+                return false;
+            });
             
-            // Close modal
+            // Close modal handler
             document.getElementById('closeModal').addEventListener('click', function() {
-                document.getElementById('confirmationModal').style.display = 'none';
+                confirmationModal.style.display = 'none';
             });
             
             // Close modal if clicked outside
-            window.onclick = function(event) {
-                const modal = document.getElementById('confirmationModal');
-                if (event.target === modal) {
-                    modal.style.display = 'none';
+            window.addEventListener('click', function(event) {
+                if (event.target === confirmationModal) {
+                    confirmationModal.style.display = 'none';
                 }
-            };
+            });
         });
     </script>
-</section>    
+</section>
 
     
     <!-- Footer -->
