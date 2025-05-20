@@ -1010,8 +1010,6 @@
 </style>
   <br><br><br>
     <br><br>
-
-  <!-- Join Team Section -->
 <!-- Join Team Section with Firebase Integration -->
 <section id="join-team" class="join-team">
     <div class="container">
@@ -1107,94 +1105,117 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     
     <script>
-        // Firebase configuration - Replace with your own Firebase project config
-        const firebaseConfig = {
-            apiKey: "AIzaSyAE2y_J9WdvfovUTALtlvLtzTwadMverAI",
-            authDomain: "studentdets.firebaseapp.com",
-            databaseURL: "https://studentdets.firebaseio.com",
-            projectId: "studentdets",
-            storageBucket: "studentdets.firebasestorage.app",
-            messagingSenderId: "586916761945",
-            appId: "1:586916761945:web:fa37ced2f6b7d7497f3c48",
-            measurementId: "G-D674RGM9QX"
-        };
-        
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        
-        // Reference to the database
-        const database = firebase.database();
-        
-        // Form submission handler
-        document.getElementById('joinTeamForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            // Form validation
-            if (!this.checkValidity()) {
-                return false;
-            }
-            
-            // Check if at least one interest is selected
-            const interestCheckboxes = document.querySelectorAll('input[name="interests"]:checked');
-            if (interestCheckboxes.length === 0) {
-                alert("Please select at least one area of interest");
-                return false;
-            }
-            
-            // Collect form data
-            const username = document.getElementById('username').value;
-            const year = document.getElementById('year').value;
-            const department = document.getElementById('department').value;
-            const hours = document.getElementById('hours').value;
-            
-            // Collect selected interests
-            const interests = [];
-            interestCheckboxes.forEach(checkbox => {
-                interests.push(checkbox.value);
-            });
-            
-            // Create application object
-            const application = {
-                username: username,
-                year: year,
-                department: department,
-                interests: interests,
-                hours: hours,
-                timestamp: new Date().toISOString()
+        // Make sure DOM is fully loaded before adding event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Firebase configuration - Replace with your own Firebase project config
+            const firebaseConfig = {
+                apiKey: "AIzaSyAE2y_J9WdvfovUTALtlvLtzTwadMverAI",
+                authDomain: "studentdets.firebaseapp.com",
+                databaseURL: "https://studentdets.firebaseio.com",
+                projectId: "studentdets",
+                storageBucket: "studentdets.firebasestorage.app",
+                messagingSenderId: "586916761945",
+                appId: "1:586916761945:web:fa37ced2f6b7d7497f3c48",
             };
             
-            // Save to Firebase
-            const newApplicationRef = database.ref('applications').push();
-            newApplicationRef.set(application)
-                .then(() => {
-                    console.log("Application saved successfully");
-                    // Show confirmation modal
-                    document.getElementById('confirmationModal').style.display = 'flex';
-                    // Reset form
-                    this.reset();
-                })
-                .catch((error) => {
-                    console.error("Error saving application: ", error);
-                    alert("There was an error submitting your application. Please try again later.");
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            
+            // Reference to the database
+            const database = firebase.database();
+            
+            // Get form element
+            const form = document.getElementById('joinTeamForm');
+            
+            // Form submission handler with direct onclick
+            form.onsubmit = function(event) {
+                event.preventDefault();
+                submitForm();
+                return false;
+            };
+            
+            // Also add a direct click handler to the button (as backup)
+            document.querySelector('#joinTeamForm button[type="submit"]').onclick = function(event) {
+                event.preventDefault();
+                submitForm();
+                return false;
+            };
+            
+            function submitForm() {
+                // Form validation
+                if (!form.checkValidity()) {
+                    // Trigger browser's native validation
+                    form.reportValidity();
+                    return;
+                }
+                
+                // Check if at least one interest is selected
+                const interestCheckboxes = document.querySelectorAll('input[name="interests"]:checked');
+                if (interestCheckboxes.length === 0) {
+                    alert("Please select at least one area of interest");
+                    return;
+                }
+                
+                // Collect form data
+                const username = document.getElementById('username').value;
+                const year = document.getElementById('year').value;
+                const department = document.getElementById('department').value;
+                const hours = document.getElementById('hours').value;
+                
+                // Collect selected interests
+                const interests = [];
+                interestCheckboxes.forEach(checkbox => {
+                    interests.push(checkbox.value);
                 });
-        });
-        
-        // Close modal
-        document.getElementById('closeModal').addEventListener('click', function() {
-            document.getElementById('confirmationModal').style.display = 'none';
-        });
-        
-        // Close modal if clicked outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('confirmationModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
+                
+                // Create application object
+                const application = {
+                    username: username,
+                    year: year,
+                    department: department,
+                    interests: interests,
+                    hours: hours,
+                    timestamp: new Date().toISOString()
+                };
+                
+                console.log("Attempting to save application:", application);
+                
+                try {
+                    // Save to Firebase
+                    const newApplicationRef = database.ref('applications').push();
+                    newApplicationRef.set(application)
+                        .then(() => {
+                            console.log("Application saved successfully");
+                            // Show confirmation modal
+                            document.getElementById('confirmationModal').style.display = 'flex';
+                            // Reset form
+                            form.reset();
+                        })
+                        .catch((error) => {
+                            console.error("Error saving application: ", error);
+                            alert("There was an error submitting your application. Please try again later.");
+                        });
+                } catch (e) {
+                    console.error("Exception during Firebase operation:", e);
+                    alert("There was an error processing your application. Please try again later.");
+                }
             }
-        }
+            
+            // Close modal
+            document.getElementById('closeModal').addEventListener('click', function() {
+                document.getElementById('confirmationModal').style.display = 'none';
+            });
+            
+            // Close modal if clicked outside
+            window.onclick = function(event) {
+                const modal = document.getElementById('confirmationModal');
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            };
+        });
     </script>
-</section>
-    
-    
+</section>    
 
     
     <!-- Footer -->
