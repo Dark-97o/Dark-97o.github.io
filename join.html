@@ -1009,28 +1009,189 @@
 </style>
   <br><br><br>
     <br><br>
-    
-    <!-- Join Team Section -->
-    <section id="join-team" class="join-team">
-        <div class="container">
-            <h2 class="section-title">Join Our Team</h2>
-            <p class="section-subtitle" style="color: white; opacity: 0.9;">Become part of our growing network of talented students</p>
+
+  <!-- Join Team Section -->
+<!-- Join Team Section with Firebase Integration -->
+<section id="join-team" class="join-team">
+    <div class="container">
+        <h2 class="section-title">Join Our Team</h2>
+        <p class="section-subtitle" style="color: white; opacity: 0.9;">Become part of our growing network of talented students</p>
+        
+        <div style="max-width: 700px; margin: 0 auto; background: rgba(0, 0, 0, 0.7); padding: 30px; border-radius: 10px;">
+            <p style="margin-bottom: 20px;">We're looking for talented students who can contribute to our community. If you excel in:</p>
+            <ul style="list-style-type: none; margin-bottom: 30px; text-align: left; display: inline-block;">
+                <li style="margin-bottom: 10px;">✓ Project development (hardware/software)</li>
+                <li style="margin-bottom: 10px;">✓ Content writing and documentation</li>
+                <li style="margin-bottom: 10px;">✓ Graphic design and presentation making</li>
+                <li style="margin-bottom: 10px;">✓ Marketing and campus outreach</li>
+            </ul>
             
-            <div style="max-width: 700px; margin: 0 auto; background: rgba(0, 0, 0, 0.7); padding: 30px; border-radius: 10px;">
-                <p style="margin-bottom: 20px;">We're looking for talented students who can contribute to our community. If you excel in:</p>
-                <ul style="list-style-type: none; margin-bottom: 30px; text-align: left; display: inline-block;">
-                    <li style="margin-bottom: 10px;">✓ Project development (hardware/software)</li>
-                    <li style="margin-bottom: 10px;">✓ Content writing and documentation</li>
-                    <li style="margin-bottom: 10px;">✓ Graphic design and presentation making</li>
-                    <li style="margin-bottom: 10px;">✓ Marketing and campus outreach</li>
-                </ul>
+            <p style="margin-bottom: 30px;">Join our team to earn while you learn and build valuable skills for your future career.</p>
+            
+            <form id="joinTeamForm" style="text-align: left;">
+                <div style="margin-bottom: 20px;">
+                    <label for="username" style="display: block; margin-bottom: 8px; color: var(--primary-color);">Username (Name that we should call you, not actual name):</label>
+                    <input type="text" id="username" name="username" required style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.5); border: 1px solid var(--primary-dark); border-radius: 5px; color: var(--text-color);">
+                </div>
                 
-                <p style="margin-bottom: 30px;">Join our team to earn while you learn and build valuable skills for your future career.</p>
+                <div style="margin-bottom: 20px;">
+                    <label for="year" style="display: block; margin-bottom: 8px; color: var(--primary-color);">Year:</label>
+                    <select id="year" name="year" required style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.5); border: 1px solid var(--primary-dark); border-radius: 5px; color: var(--text-color);">
+                        <option value="">Select Year</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                </div>
                 
-                <a href="https://forms.google.com/join-team" class="btn" style="background: var(--accent-color); padding: 15px 40px; font-size: 1.1rem; color:#ffffff">Apply Now</a>
-            </div>
+                <div style="margin-bottom: 20px;">
+                    <label for="department" style="display: block; margin-bottom: 8px; color: var(--primary-color);">Department:</label>
+                    <input type="text" id="department" name="department" required style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.5); border: 1px solid var(--primary-dark); border-radius: 5px; color: var(--text-color);">
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 12px; color: var(--primary-color);">What are you interested in?</label>
+                    <div style="display: flex; flex-wrap: wrap;">
+                        <div style="margin-right: 20px; margin-bottom: 10px;">
+                            <input type="checkbox" id="assignment" name="interests" value="Assignment Work">
+                            <label for="assignment" style="margin-left: 5px;">Assignment Work</label>
+                        </div>
+                        <div style="margin-right: 20px; margin-bottom: 10px;">
+                            <input type="checkbox" id="ed" name="interests" value="ED Work">
+                            <label for="ed" style="margin-left: 5px;">ED Work</label>
+                        </div>
+                        <div style="margin-right: 20px; margin-bottom: 10px;">
+                            <input type="checkbox" id="ppt" name="interests" value="PPT Work">
+                            <label for="ppt" style="margin-left: 5px;">PPT Work</label>
+                        </div>
+                        <div style="margin-right: 20px; margin-bottom: 10px;">
+                            <input type="checkbox" id="labfile" name="interests" value="Lab File Work">
+                            <label for="labfile" style="margin-left: 5px;">Lab File Work</label>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <input type="checkbox" id="other" name="interests" value="Other Project Related Work">
+                            <label for="other" style="margin-left: 5px;">Other Project Related Work</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <label for="hours" style="display: block; margin-bottom: 8px; color: var(--primary-color);">How many hours can you dedicate weekly?</label>
+                    <input type="number" id="hours" name="hours" min="1" max="40" required style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.5); border: 1px solid var(--primary-dark); border-radius: 5px; color: var(--text-color);">
+                </div>
+                
+                <button type="submit" class="btn" style="background: var(--accent-color); padding: 12px 30px; font-size: 1rem; color:#ffffff; width: 100%;">Apply Now</button>
+            </form>
         </div>
-    </section>
+    </div>
+    
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="background: var(--secondary-color); border: 2px solid var(--primary-color); border-radius: 10px; padding: 30px; max-width: 500px; width: 90%; text-align: center; position: relative;">
+            <span id="closeModal" style="position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: var(--primary-color);">&times;</span>
+            <h3 style="color: var(--primary-color); margin-bottom: 20px;">Application Submitted!</h3>
+            <p style="margin-bottom: 20px;">Thank you for applying to join our team. We'll review your application soon.</p>
+            <p style="margin-bottom: 20px;">Please join our community channels for updates on available work and opportunities:</p>
+            <div style="margin-bottom: 25px;">
+                <a href="https://t.me/teamchannel" target="_blank" class="btn" style="background: #0088cc; margin-right: 10px;">Join Telegram</a>
+                <a href="https://chat.whatsapp.com/group" target="_blank" class="btn" style="background: #25D366;">Join WhatsApp</a>
+            </div>
+            <p style="font-size: 0.9rem; opacity: 0.7;">Keep checking these platforms regularly for work assignments and important details.</p>
+        </div>
+    </div>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    
+    <script>
+        // Firebase configuration - Replace with your own Firebase project config
+        const firebaseConfig = {
+            apiKey: "AIzaSyAE2y_J9WdvfovUTALtlvLtzTwadMverAI",
+            authDomain: "studentdets.firebaseapp.com",
+            databaseURL: "https://studentdets.firebaseio.com",
+            projectId: "studentdets",
+            storageBucket: "studentdets.firebasestorage.app",
+            messagingSenderId: "586916761945",
+            appId: "1:586916761945:web:fa37ced2f6b7d7497f3c48",
+            measurementId: "G-D674RGM9QX"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        
+        // Reference to the database
+        const database = firebase.database();
+        
+        // Form submission handler
+        document.getElementById('joinTeamForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Form validation
+            if (!this.checkValidity()) {
+                return false;
+            }
+            
+            // Check if at least one interest is selected
+            const interestCheckboxes = document.querySelectorAll('input[name="interests"]:checked');
+            if (interestCheckboxes.length === 0) {
+                alert("Please select at least one area of interest");
+                return false;
+            }
+            
+            // Collect form data
+            const username = document.getElementById('username').value;
+            const year = document.getElementById('year').value;
+            const department = document.getElementById('department').value;
+            const hours = document.getElementById('hours').value;
+            
+            // Collect selected interests
+            const interests = [];
+            interestCheckboxes.forEach(checkbox => {
+                interests.push(checkbox.value);
+            });
+            
+            // Create application object
+            const application = {
+                username: username,
+                year: year,
+                department: department,
+                interests: interests,
+                hours: hours,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Save to Firebase
+            const newApplicationRef = database.ref('applications').push();
+            newApplicationRef.set(application)
+                .then(() => {
+                    console.log("Application saved successfully");
+                    // Show confirmation modal
+                    document.getElementById('confirmationModal').style.display = 'flex';
+                    // Reset form
+                    this.reset();
+                })
+                .catch((error) => {
+                    console.error("Error saving application: ", error);
+                    alert("There was an error submitting your application. Please try again later.");
+                });
+        });
+        
+        // Close modal
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('confirmationModal').style.display = 'none';
+        });
+        
+        // Close modal if clicked outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('confirmationModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</section>
     
     
 
@@ -1040,7 +1201,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <div class="logo">
+                    <div class="logo"> 
                         <img src="https://lh3.googleusercontent.com/pw/AP1GczOdFAS_JGWotWMJF4LNK3HIwy3BcYLYGkNs1OSnJTQqi5SH3Fu6JGCF4Ih3fnm08lByT7qPAPybLPTF7TzuDgTi5otMigrX6YP_1Dq1kaEySEmjHGScigLMYd7pYLUO_4jZjUly57Mimx5IYDtLF4BK=w500-h500-s-no-gm?authuser=3" alt="UEM Shadow Market Logo">
                         <div class="logo-text">UEM Shadow Market</div>
                     </div>
